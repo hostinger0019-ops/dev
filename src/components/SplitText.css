@@ -1,0 +1,30 @@
+/* ============================================
+   SPLIT TEXT — Framer-style word reveal
+   ============================================ */
+
+.split-text {
+  display: flex;
+  flex-wrap: wrap;
+  overflow: visible;
+}
+
+.split-text-center {
+  justify-content: center;
+}
+
+.split-word-wrapper {
+  display: inline-flex;
+  overflow: hidden;
+  vertical-align: top;
+  padding-bottom: 4px;
+}
+
+.split-word {
+  display: inline-block;
+  will-change: transform, opacity;
+}
+
+/* Preserve spaces */
+.split-space {
+  width: 0.3em;
+}

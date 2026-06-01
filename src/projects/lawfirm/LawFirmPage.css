@@ -1,0 +1,106 @@
+/* ============================================
+   LEGALEDGE — Demo Law Firm Website
+   Accent: Slate Blue #6366F1
+   Background: Deep #09090B
+   ============================================ */
+.lf-page { --lf-bg:#09090B; --lf-bg-card:rgba(255,255,255,0.03); --lf-accent:#6366F1; --lf-accent-light:#818CF8; --lf-accent-text:#A5B4FC; --lf-text:#FAFAFA; --lf-text-muted:#A1A1AA; --lf-border:rgba(255,255,255,0.06); --lf-radius:12px; background:var(--lf-bg); color:var(--lf-text); font-family:var(--font-body); }
+
+.lf-back-badge { position:fixed; top:20px; left:20px; z-index:100; display:inline-flex; align-items:center; gap:6px; padding:8px 14px; border-radius:999px; background:rgba(9,9,11,0.85); backdrop-filter:blur(12px); border:1px solid var(--lf-border); font-size:0.75rem; font-family:var(--font-mono); color:var(--lf-text-muted); text-decoration:none; transition:all 0.3s ease; }
+.lf-back-badge:hover { background:rgba(99,102,241,0.1); border-color:rgba(99,102,241,0.3); color:var(--lf-accent-text); }
+
+.lf-navbar { position:fixed; top:0; left:0; right:0; z-index:90; padding:0 40px; height:72px; display:flex; align-items:center; justify-content:space-between; transition:all 0.4s ease; }
+.lf-navbar.scrolled { background:rgba(9,9,11,0.92); backdrop-filter:blur(16px); border-bottom:1px solid var(--lf-border); }
+.lf-navbar-logo { font-family:var(--font-heading); font-size:1.35rem; font-weight:700; letter-spacing:-0.03em; color:var(--lf-text); cursor:pointer; }
+.lf-navbar-logo span { color:var(--lf-accent); }
+.lf-nav-links { display:flex; align-items:center; gap:32px; }
+.lf-nav-links a { font-size:0.85rem; font-weight:500; color:var(--lf-text-muted); text-decoration:none; transition:color 0.3s ease; }
+.lf-nav-links a:hover { color:var(--lf-text); }
+.lf-cta-btn { padding:10px 24px; border-radius:999px; background:var(--lf-accent); color:#fff; font-size:0.8rem; font-weight:700; text-decoration:none; text-transform:uppercase; letter-spacing:1px; transition:all 0.3s ease; border:none; cursor:pointer; }
+.lf-cta-btn:hover { background:var(--lf-accent-light); transform:translateY(-1px); box-shadow:0 8px 24px rgba(99,102,241,0.25); }
+.lf-mobile-toggle { display:none; flex-direction:column; gap:5px; cursor:pointer; z-index:100; }
+.lf-mobile-toggle span { width:24px; height:2px; background:var(--lf-text); transition:all 0.3s ease; }
+.lf-mobile-menu { display:none; }
+
+.lf-hero { position:relative; height:100vh; min-height:600px; display:flex; align-items:center; justify-content:center; overflow:hidden; }
+.lf-hero-bg { position:absolute; inset:0; z-index:0; }
+.lf-hero-bg img { width:100%; height:100%; object-fit:cover; }
+.lf-hero-overlay { position:absolute; inset:0; background:linear-gradient(to bottom, rgba(9,9,11,0.5) 0%, rgba(9,9,11,0.7) 50%, rgba(9,9,11,0.95) 100%); z-index:1; }
+.lf-hero-content { position:relative; z-index:2; text-align:center; padding:0 24px; }
+.lf-hero-badge { display:inline-flex; align-items:center; gap:8px; padding:6px 18px; border-radius:999px; border:1px solid rgba(99,102,241,0.3); background:rgba(99,102,241,0.08); font-family:var(--font-mono); font-size:0.7rem; font-weight:500; color:var(--lf-accent-text); text-transform:uppercase; letter-spacing:2px; margin-bottom:32px; }
+.lf-hero-title { font-family:var(--font-heading); font-size:clamp(3rem,8vw,5.5rem); font-weight:800; line-height:1; letter-spacing:-0.05em; color:var(--lf-text); margin-bottom:16px; }
+.lf-hero-title-accent { background:linear-gradient(135deg,var(--lf-accent),var(--lf-accent-light)); -webkit-background-clip:text; -webkit-text-fill-color:transparent; background-clip:text; }
+.lf-hero-tagline { font-size:1.15rem; color:var(--lf-text-muted); margin-bottom:48px; max-width:540px; margin-left:auto; margin-right:auto; line-height:1.7; }
+.lf-hero-buttons { display:flex; align-items:center; justify-content:center; gap:16px; flex-wrap:wrap; }
+.lf-btn-outline { padding:12px 28px; border-radius:999px; background:transparent; border:1px solid rgba(255,255,255,0.2); color:var(--lf-text); font-size:0.85rem; font-weight:600; text-decoration:none; transition:all 0.3s ease; cursor:pointer; }
+.lf-btn-outline:hover { background:rgba(255,255,255,0.06); border-color:rgba(255,255,255,0.3); }
+.lf-hero-scroll { position:absolute; bottom:32px; left:50%; transform:translateX(-50%); z-index:2; display:flex; flex-direction:column; align-items:center; gap:8px; font-size:0.7rem; font-family:var(--font-mono); color:var(--lf-text-muted); text-transform:uppercase; letter-spacing:2px; animation:lfBounce 2s infinite; }
+@keyframes lfBounce { 0%,100%{transform:translateX(-50%) translateY(0);}50%{transform:translateX(-50%) translateY(6px);} }
+
+.lf-section-label { display:inline-flex; align-items:center; gap:12px; font-family:var(--font-mono); font-size:0.75rem; font-weight:500; color:var(--lf-accent-text); text-transform:uppercase; letter-spacing:2px; margin-bottom:24px; }
+.lf-section-label::before,.lf-section-label::after { content:''; width:40px; height:1px; background:rgba(99,102,241,0.3); }
+.lf-section-title { font-family:var(--font-heading); font-size:clamp(2rem,4vw,3rem); font-weight:800; letter-spacing:-0.04em; color:var(--lf-text); margin-bottom:20px; }
+
+.lf-practices { padding:100px 0; max-width:1100px; margin:0 auto; padding-left:24px; padding-right:24px; }
+.lf-practices-header { text-align:center; margin-bottom:48px; }
+.lf-filter-tabs { display:flex; justify-content:center; gap:8px; margin-bottom:48px; flex-wrap:wrap; }
+.lf-filter-tab { padding:10px 24px; border-radius:999px; background:transparent; border:1px solid var(--lf-border); color:var(--lf-text-muted); font-size:0.85rem; font-weight:500; font-family:var(--font-body); cursor:pointer; transition:all 0.3s ease; }
+.lf-filter-tab:hover { border-color:rgba(99,102,241,0.3); color:var(--lf-text); }
+.lf-filter-tab.active { background:var(--lf-accent); border-color:var(--lf-accent); color:#fff; font-weight:700; }
+.lf-practice-grid { display:grid; grid-template-columns:repeat(2,1fr); gap:16px; }
+.lf-practice-card { display:flex; gap:16px; padding:20px; background:var(--lf-bg-card); border:1px solid var(--lf-border); border-radius:var(--lf-radius); transition:all 0.3s ease; }
+.lf-practice-card:hover { border-color:rgba(99,102,241,0.15); background:rgba(255,255,255,0.05); }
+.lf-practice-img { width:80px; height:80px; border-radius:8px; overflow:hidden; flex-shrink:0; }
+.lf-practice-img img { width:100%; height:100%; object-fit:cover; }
+.lf-practice-info { flex:1; }
+.lf-practice-name { font-size:0.95rem; font-weight:600; color:var(--lf-text); margin-bottom:6px; }
+.lf-practice-desc { font-size:0.8rem; color:var(--lf-text-muted); line-height:1.5; }
+
+.lf-team { padding:100px 0; max-width:1100px; margin:0 auto; padding-left:24px; padding-right:24px; }
+.lf-team-header { text-align:center; margin-bottom:48px; }
+.lf-team-grid { display:grid; grid-template-columns:repeat(4,1fr); gap:16px; }
+.lf-team-card { padding:24px; background:var(--lf-bg-card); border:1px solid var(--lf-border); border-radius:var(--lf-radius); text-align:center; transition:all 0.3s ease; }
+.lf-team-card:hover { border-color:rgba(99,102,241,0.15); transform:translateY(-4px); }
+.lf-team-avatar { width:64px; height:64px; border-radius:50%; background:rgba(99,102,241,0.1); border:2px solid rgba(99,102,241,0.2); display:flex; align-items:center; justify-content:center; margin:0 auto 12px; font-size:1.5rem; color:var(--lf-accent-text); }
+.lf-team-name { font-size:0.9rem; font-weight:600; color:var(--lf-text); margin-bottom:2px; }
+.lf-team-role { font-size:0.75rem; color:var(--lf-accent-text); font-family:var(--font-mono); margin-bottom:4px; }
+.lf-team-exp { font-size:0.7rem; color:var(--lf-text-muted); }
+.lf-team-spec { font-size:0.7rem; color:var(--lf-text-muted); font-style:italic; margin-top:4px; }
+
+.lf-consult { padding:100px 0; max-width:700px; margin:0 auto; padding-left:24px; padding-right:24px; }
+.lf-consult-header { text-align:center; margin-bottom:48px; }
+.lf-form { display:grid; grid-template-columns:repeat(2,1fr); gap:16px; }
+.lf-form-group { display:flex; flex-direction:column; gap:6px; }
+.lf-form-group.full-width { grid-column:span 2; }
+.lf-form-label { font-size:0.75rem; font-family:var(--font-mono); color:var(--lf-text-muted); text-transform:uppercase; letter-spacing:1px; }
+.lf-input,.lf-textarea,.lf-select { padding:12px 16px; border-radius:8px; background:rgba(255,255,255,0.04); border:1px solid var(--lf-border); color:var(--lf-text); font-size:0.9rem; font-family:var(--font-body); transition:all 0.3s ease; outline:none; }
+.lf-input:focus,.lf-textarea:focus,.lf-select:focus { border-color:rgba(99,102,241,0.4); background:rgba(99,102,241,0.04); box-shadow:0 0 0 3px rgba(99,102,241,0.08); }
+.lf-input::placeholder,.lf-textarea::placeholder { color:rgba(161,161,170,0.5); }
+.lf-textarea { resize:vertical; min-height:80px; }
+.lf-select { cursor:pointer; appearance:none; background-image:url("data:image/svg+xml,%3csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 16 16'%3e%3cpath fill='none' stroke='%23A1A1AA' stroke-linecap='round' stroke-linejoin='round' stroke-width='2' d='m2 5 6 6 6-6'/%3e%3c/svg%3e"); background-repeat:no-repeat; background-position:right 12px center; background-size:14px; padding-right:36px; }
+.lf-form-submit { grid-column:span 2; margin-top:8px; }
+.lf-form-submit .lf-cta-btn { width:100%; padding:14px; font-size:0.9rem; }
+
+.lf-toast { position:fixed; bottom:32px; left:50%; transform:translateX(-50%); z-index:200; padding:14px 28px; border-radius:999px; background:var(--lf-accent); color:#fff; font-weight:700; font-size:0.9rem; box-shadow:0 12px 40px rgba(99,102,241,0.3); }
+
+.lf-footer { padding:40px 0; border-top:1px solid var(--lf-border); max-width:1100px; margin:0 auto; padding-left:24px; padding-right:24px; }
+.lf-footer-inner { display:flex; justify-content:space-between; align-items:center; }
+.lf-footer-logo { font-family:var(--font-heading); font-size:1.1rem; font-weight:700; color:var(--lf-text); }
+.lf-footer-logo span { color:var(--lf-accent); }
+.lf-footer-copy { font-size:0.75rem; color:var(--lf-text-muted); max-width:400px; text-align:center; line-height:1.5; }
+
+@media (max-width:1024px) { .lf-team-grid { grid-template-columns:repeat(2,1fr); } }
+@media (max-width:768px) {
+  .lf-navbar { padding:0 20px; } .lf-nav-links { display:none; }
+  .lf-mobile-toggle { display:flex; }
+  .lf-mobile-menu { display:none; position:fixed; inset:0; z-index:95; background:rgba(9,9,11,0.97); backdrop-filter:blur(20px); flex-direction:column; align-items:center; justify-content:center; gap:24px; }
+  .lf-mobile-menu.open { display:flex; }
+  .lf-mobile-menu a { font-size:1.2rem; font-weight:600; color:var(--lf-text); text-decoration:none; }
+  .lf-practice-grid { grid-template-columns:1fr; }
+  .lf-team-grid { grid-template-columns:1fr; }
+  .lf-form { grid-template-columns:1fr; }
+  .lf-form-group.full-width { grid-column:span 1; }
+  .lf-form-submit { grid-column:span 1; }
+  .lf-hero-buttons { flex-direction:column; }
+  .lf-footer-inner { flex-direction:column; gap:16px; text-align:center; }
+  .lf-back-badge { top:auto; bottom:20px; left:50%; transform:translateX(-50%); }
+}
