@@ -3,7 +3,10 @@ import { motion, AnimatePresence } from 'framer-motion';
 import { LuMessageSquare, LuX, LuSend, LuBot, LuUser, LuSparkles } from 'react-icons/lu';
 import './ChatBot.css';
 
-const CEREBRAS_API_URL = '/api/cerebras/v1/chat/completions';
+const isDev = import.meta.env.DEV;
+const CEREBRAS_API_URL = isDev
+  ? '/api/cerebras/v1/chat/completions'
+  : 'https://api.cerebras.ai/v1/chat/completions';
 const API_KEY = import.meta.env.VITE_CEREBRAS_API_KEY;
 
 const SYSTEM_PROMPT = `You are Tarik AI — the smart assistant for Tarik Services, a premium web development & digital solutions agency based in India.
