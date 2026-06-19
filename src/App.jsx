@@ -22,12 +22,14 @@ import InteriorDesignPage from './projects/interiordesign/InteriorDesignPage';
 import HotelPage from './projects/hotel/HotelPage';
 import CarDealerPage from './projects/cardealership/CarDealerPage';
 import BakeryPage from './projects/bakery/BakeryPage';
+import PrivacyPolicy from './pages/PrivacyPolicy';
+import TermsConditions from './pages/TermsConditions';
 
 export default function App() {
   const [introComplete, setIntroComplete] = useState(false);
   const location = useLocation();
   const isHome = location.pathname === '/';
-  const isDemoPage = ['/restaurant', '/realestate', '/ecommerce', '/salon', '/dental', '/wedding', '/gym', '/lawfirm', '/education', '/travel', '/photography', '/interiordesign', '/hotel', '/cardealership', '/bakery'].includes(location.pathname);
+  const isDemoPage = ['/restaurant', '/realestate', '/ecommerce', '/salon', '/dental', '/wedding', '/gym', '/lawfirm', '/education', '/travel', '/photography', '/interiordesign', '/hotel', '/cardealership', '/bakery', '/privacy-policy', '/terms-and-conditions'].includes(location.pathname);
 
   const handleIntroComplete = useCallback(() => {
     setIntroComplete(true);
@@ -55,6 +57,8 @@ export default function App() {
         <Route path="/hotel" element={<HotelPage />} />
         <Route path="/cardealership" element={<CarDealerPage />} />
         <Route path="/bakery" element={<BakeryPage />} />
+        <Route path="/privacy-policy" element={<PrivacyPolicy />} />
+        <Route path="/terms-and-conditions" element={<TermsConditions />} />
       </Routes>
       {!isDemoPage && <Footer />}
       {!isDemoPage && <ChatBot />}
