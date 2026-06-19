@@ -1,7 +1,7 @@
-import { useState, useEffect } from 'react';
-import { useLocation, useNavigate } from 'react-router-dom';
-import { motion } from 'framer-motion';
-import { LuZap } from 'react-icons/lu';
+import { useState, useEffect, useRef } from 'react';
+import { useLocation, useNavigate, Link } from 'react-router-dom';
+import { motion, AnimatePresence } from 'framer-motion';
+import { LuZap, LuMoreVertical, LuShieldCheck, LuFileText, LuMail, LuGlobe } from 'react-icons/lu';
 import { useCursor } from '../context/CursorContext';
 import MagneticButton from './MagneticButton';
 import './Navbar.css';
@@ -17,6 +17,8 @@ const navLinks = [
 export default function Navbar() {
   const [scrolled, setScrolled] = useState(false);
   const [mobileOpen, setMobileOpen] = useState(false);
+  const [moreOpen, setMoreOpen] = useState(false);
+  const moreRef = useRef(null);
   const { setCursorHovered, setCursorLabel } = useCursor();
   const location = useLocation();
   const navigate = useNavigate();
@@ -32,6 +34,17 @@ export default function Navbar() {
     document.body.style.overflow = mobileOpen ? 'hidden' : '';
     return () => { document.body.style.overflow = ''; };
   }, [mobileOpen]);
+
+  // Close 3-dot menu on outside click
+  useEffect(() => {
+    const handleClickOutside = (e) => {
+      if (moreRef.current && !moreRef.current.contains(e.target)) {
+        setMoreOpen(false);
+      }
+    };
+    if (moreOpen) document.addEventListener('mousedown', handleClickOutside);
+    return () => document.removeEventListener('mousedown', handleClickOutside);
+  }, [moreOpen]);
 
   const handleNavClick = (e, href) => {
     e.preventDefault();
@@ -104,6 +117,47 @@ export default function Navbar() {
               Get Started
             </motion.a>
           </MagneticButton>
+
+          {/* 3-dot More Menu */}
+          <div className="navbar-more" ref={moreRef}>
+            <motion.button
+              className={`navbar-more-btn ${moreOpen ? 'active' : ''}`}
+              onClick={() => setMoreOpen(!moreOpen)}
+              whileTap={{ scale: 0.92 }}
+              aria-label="More options"
+              initial={{ opacity: 0, y: -8 }}
+              animate={{ opacity: 1, y: 0 }}
+              transition={{ delay: 0.55, duration: 0.4, ease: [0.4, 0, 0, 1] }}
+            >
+              <LuMoreVertical size={16} />
+            </motion.button>
+
+            <AnimatePresence>
+              {moreOpen && (
+                <motion.div
+                  className="navbar-more-dropdown"
+                  initial={{ opacity: 0, y: 8, scale: 0.96 }}
+                  animate={{ opacity: 1, y: 0, scale: 1 }}
+                  exit={{ opacity: 0, y: 8, scale: 0.96 }}
+                  transition={{ duration: 0.2, ease: [0.4, 0, 0, 1] }}
+                >
+                  <Link to="/privacy-policy" className="navbar-more-item" onClick={() => setMoreOpen(false)}>
+                    <LuShieldCheck size={14} /> Privacy Policy
+                  </Link>
+                  <Link to="/terms-and-conditions" className="navbar-more-item" onClick={() => setMoreOpen(false)}>
+                    <LuFileText size={14} /> Terms & Conditions
+                  </Link>
+                  <div className="navbar-more-divider" />
+                  <a href="#contact" className="navbar-more-item" onClick={(e) => { setMoreOpen(false); handleNavClick(e, '#contact'); }}>
+                    <LuMail size={14} /> Contact Us
+                  </a>
+                  <a href="https://tarikweb.com" className="navbar-more-item" target="_blank" rel="noopener noreferrer">
+                    <LuGlobe size={14} /> Visit Website
+                  </a>
+                </motion.div>
+              )}
+            </AnimatePresence>
+          </div>
         </div>
 
         <div
@@ -126,6 +180,11 @@ export default function Navbar() {
         <a href="#contact" className="btn btn-primary" onClick={(e) => handleNavClick(e, '#contact')}>
           Get Started
         </a>
+        <div className="navbar-mobile-legal">
+          <Link to="/privacy-policy" onClick={() => setMobileOpen(false)}>Privacy Policy</Link>
+          <span>•</span>
+          <Link to="/terms-and-conditions" onClick={() => setMobileOpen(false)}>Terms</Link>
+        </div>
       </div>
     </motion.nav>
   );

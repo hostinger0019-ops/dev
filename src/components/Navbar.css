@@ -183,4 +183,105 @@
   .navbar-toggle {
     display: flex;
   }
+
+  .navbar-more {
+    display: none;
+  }
+}
+
+/* ── 3-Dot More Menu ── */
+.navbar-more {
+  position: relative;
+  margin-left: 4px;
+}
+
+.navbar-more-btn {
+  width: 32px;
+  height: 32px;
+  border: none;
+  border-radius: 8px;
+  background: transparent;
+  color: var(--text-secondary);
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  transition: all 0.2s ease;
+}
+
+.navbar-more-btn:hover,
+.navbar-more-btn.active {
+  background: rgba(255, 255, 255, 0.06);
+  color: var(--text-primary);
+}
+
+.navbar-more-dropdown {
+  position: absolute;
+  top: calc(100% + 8px);
+  right: 0;
+  min-width: 200px;
+  padding: 6px;
+  border-radius: 12px;
+  background: rgba(18, 18, 22, 0.98);
+  border: 1px solid rgba(255, 255, 255, 0.08);
+  box-shadow:
+    0 12px 40px rgba(0, 0, 0, 0.5),
+    0 0 1px rgba(255, 255, 255, 0.1);
+  backdrop-filter: blur(20px);
+  z-index: 100;
+}
+
+.navbar-more-item {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  padding: 9px 12px;
+  border-radius: 8px;
+  font-size: 0.8rem;
+  font-weight: 450;
+  color: var(--text-secondary) !important;
+  text-decoration: none;
+  transition: all 0.15s ease;
+  cursor: pointer;
+  background: none;
+  border: none;
+  width: 100%;
+}
+
+.navbar-more-item:hover {
+  background: rgba(255, 255, 255, 0.06) !important;
+  color: var(--text-primary) !important;
+}
+
+.navbar-more-divider {
+  height: 1px;
+  margin: 4px 8px;
+  background: rgba(255, 255, 255, 0.06);
+}
+
+/* Mobile legal links */
+.navbar-mobile-legal {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  margin-top: 20px;
+  padding-top: 20px;
+  border-top: 1px solid rgba(255, 255, 255, 0.06);
+}
+
+.navbar-mobile-legal a {
+  font-size: 0.8rem !important;
+  font-weight: 400 !important;
+  color: var(--text-secondary) !important;
+  opacity: 0.6;
+}
+
+.navbar-mobile-legal a:hover {
+  opacity: 1;
+  color: var(--text-primary) !important;
+}
+
+.navbar-mobile-legal span {
+  color: rgba(255, 255, 255, 0.15);
+  font-size: 0.6rem;
 }
