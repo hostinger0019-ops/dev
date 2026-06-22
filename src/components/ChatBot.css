@@ -171,6 +171,59 @@
   gap: 10px;
   scrollbar-width: thin;
   scrollbar-color: rgba(255,255,255,0.08) transparent;
+  position: relative;
+}
+
+/* Bottom-align messages — pushes messages down like WhatsApp */
+.chatbot-messages::before {
+  content: '';
+  flex: 1 1 0;
+}
+
+/* Subtle dot-grid wallpaper pattern — like Telegram/WhatsApp dark mode */
+.chatbot-messages::after {
+  content: '';
+  position: fixed;
+  inset: 0;
+  background-image: radial-gradient(circle, rgba(255, 255, 255, 0.03) 1px, transparent 1px);
+  background-size: 20px 20px;
+  pointer-events: none;
+  z-index: 0;
+}
+
+.chatbot-messages > * {
+  position: relative;
+  z-index: 1;
+}
+
+/* Scroll-to-bottom floating button */
+.chatbot-scroll-btn {
+  position: sticky;
+  bottom: 8px;
+  align-self: center;
+  width: 36px;
+  height: 36px;
+  border-radius: 50%;
+  border: 1px solid rgba(255, 255, 255, 0.1);
+  background: rgba(14, 14, 18, 0.9);
+  backdrop-filter: blur(8px);
+  color: var(--text-secondary, #a1a1aa);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+  transition: all 0.2s ease;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.4);
+  z-index: 2;
+  flex-shrink: 0;
+}
+
+.chatbot-scroll-btn:hover {
+  background: rgba(124, 111, 255, 0.15);
+  border-color: rgba(124, 111, 255, 0.3);
+  color: #a78bfa;
+  transform: translateY(-2px);
+  box-shadow: 0 6px 16px rgba(124, 111, 255, 0.2);
 }
 
 .chatbot-messages::-webkit-scrollbar {

@@ -1,6 +1,6 @@
 import { useState, useRef, useEffect, useCallback } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
-import { LuMessageSquare, LuX, LuSend, LuBot, LuUser, LuSparkles } from 'react-icons/lu';
+import { LuMessageSquare, LuX, LuSend, LuBot, LuUser, LuSparkles, LuChevronDown } from 'react-icons/lu';
 import './ChatBot.css';
 
 const isDev = import.meta.env.DEV;
@@ -51,9 +51,11 @@ export default function ChatBot() {
   const [input, setInput] = useState('');
   const [isLoading, setIsLoading] = useState(false);
   const [hasUnread, setHasUnread] = useState(false);
+  const [showScrollBtn, setShowScrollBtn] = useState(false);
   const messagesEndRef = useRef(null);
   const inputRef = useRef(null);
   const windowRef = useRef(null);
+  const messagesContainerRef = useRef(null);
 
   const scrollToBottom = useCallback(() => {
     messagesEndRef.current?.scrollIntoView({ behavior: 'smooth' });
@@ -62,6 +64,21 @@ export default function ChatBot() {
   useEffect(() => {
     scrollToBottom();
   }, [messages, scrollToBottom]);
+
+  // Detect scroll position to show/hide scroll-to-bottom button
+  useEffect(() => {
+    const container = messagesContainerRef.current;
+    if (!container) return;
+
+    const handleScroll = () => {
+      const { scrollTop, scrollHeight, clientHeight } = container;
+      // Show button when user scrolls more than 100px from bottom
+      setShowScrollBtn(scrollHeight - scrollTop - clientHeight > 100);
+    };
+
+    container.addEventListener('scroll', handleScroll, { passive: true });
+    return () => container.removeEventListener('scroll', handleScroll);
+  }, [isOpen]);
 
   useEffect(() => {
     if (isOpen && inputRef.current) {
@@ -222,7 +239,7 @@ export default function ChatBot() {
             </div>
 
             {/* Messages */}
-            <div className="chatbot-messages">
+            <div className="chatbot-messages" ref={messagesContainerRef}>
               {messages.map((msg, i) => (
                 <motion.div
                   key={i}
@@ -256,6 +273,23 @@ export default function ChatBot() {
               )}
 
               <div ref={messagesEndRef} />
+
+              {/* Scroll to bottom FAB */}
+              <AnimatePresence>
+                {showScrollBtn && (
+                  <motion.button
+                    className="chatbot-scroll-btn"
+                    onClick={scrollToBottom}
+                    initial={{ opacity: 0, scale: 0.8 }}
+                    animate={{ opacity: 1, scale: 1 }}
+                    exit={{ opacity: 0, scale: 0.8 }}
+                    transition={{ duration: 0.2 }}
+                    aria-label="Scroll to bottom"
+                  >
+                    <LuChevronDown size={18} />
+                  </motion.button>
+                )}
+              </AnimatePresence>
             </div>
 
             {/* Quick Prompts */}
