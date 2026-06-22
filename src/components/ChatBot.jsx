@@ -5,9 +5,9 @@ import './ChatBot.css';
 
 const isDev = import.meta.env.DEV;
 const API_URL = isDev
-  ? '/api/openai/v1/chat/completions'
-  : 'https://api.openai.com/v1/chat/completions';
-const API_KEY = import.meta.env.VITE_OPENAI_API_KEY;
+  ? '/api/anthropic/v1/messages'
+  : 'https://api.anthropic.com/v1/messages';
+const API_KEY = import.meta.env.VITE_CLAUDE_API_KEY;
 
 const SYSTEM_PROMPT = `You are Tarik — the founder of Tarik Services. You are chatting on your website with visitors who found you through a YouTube ad about professional websites starting at ₹25,000.
 
@@ -342,21 +342,20 @@ export default function ChatBot() {
     setIsLoading(true);
 
     try {
-      const apiMessages = [
-        { role: 'system', content: SYSTEM_PROMPT },
-        ...newMessages.map((m) => ({ role: m.role, content: m.content })),
-      ];
+      const claudeMessages = newMessages.map((m) => ({ role: m.role, content: m.content }));
 
       const res = await fetch(API_URL, {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',
-          Authorization: `Bearer ${API_KEY}`,
+          'x-api-key': API_KEY,
+          'anthropic-version': '2023-06-01',
         },
         body: JSON.stringify({
-          model: 'gpt-4o-mini',
-          messages: apiMessages,
-          max_completion_tokens: 500,
+          model: 'claude-opus-4-20250514',
+          max_tokens: 500,
+          system: SYSTEM_PROMPT,
+          messages: claudeMessages,
           temperature: 0.7,
         }),
       });
@@ -366,11 +365,11 @@ export default function ChatBot() {
       }
 
       const data = await res.json();
-      const aiContent = data.choices?.[0]?.message?.content || 'Sorry, I couldn\'t process that. Please try again!';
+      const aiContent = data.content?.[0]?.text || 'Sorry, I couldn\'t process that. Please try again!';
 
       setMessages((prev) => [...prev, { role: 'assistant', content: aiContent }]);
     } catch (err) {
-      console.error('Cerebras API error:', err);
+      console.error('Claude API error:', err);
       setMessages((prev) => [
         ...prev,
         {
