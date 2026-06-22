@@ -1,6 +1,6 @@
 import { useState, useRef, useEffect, useCallback } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
-import { LuMessageSquare, LuX, LuSend, LuBot, LuUser, LuSparkles, LuChevronDown } from 'react-icons/lu';
+import { LuMessageSquare, LuX, LuSend, LuSparkles, LuChevronDown } from 'react-icons/lu';
 import './ChatBot.css';
 
 const isDev = import.meta.env.DEV;
@@ -45,7 +45,7 @@ export default function ChatBot() {
   const [messages, setMessages] = useState([
     {
       role: 'assistant',
-      content: 'Hey there! 👋 I\'m Tarik AI. How can I help you today? Ask me about our services, pricing, or explore our industry demos!',
+      content: 'Hey there! 👋 I\'m here to help you today. Ask me about our services, pricing, or explore our industry demos!',
     },
   ]);
   const [input, setInput] = useState('');
@@ -201,10 +201,10 @@ export default function ChatBot() {
         initial={{ scale: 0, opacity: 0 }}
         animate={{ scale: 1, opacity: 1 }}
         transition={{ delay: 1.5, duration: 0.4, type: 'spring', stiffness: 200 }}
-        aria-label="Open AI Chat"
+        aria-label="Open Chat"
       >
         <LuMessageSquare size={22} />
-        <span className="chatbot-fab-label">Ask AI</span>
+        <span className="chatbot-fab-label">Chat</span>
         {hasUnread && <span className="chatbot-fab-badge" />}
       </motion.button>
 
@@ -226,10 +226,10 @@ export default function ChatBot() {
                   <LuSparkles size={16} />
                 </div>
                 <div>
-                  <div className="chatbot-header-name">Tarik AI</div>
+                  <div className="chatbot-header-name">Tarik</div>
                   <div className="chatbot-header-status">
                     <span className="chatbot-status-dot" />
-                    Powered by Cerebras
+                    Online
                   </div>
                 </div>
               </div>
@@ -248,9 +248,6 @@ export default function ChatBot() {
                   animate={{ opacity: 1, y: 0 }}
                   transition={{ duration: 0.25 }}
                 >
-                  <div className="chatbot-msg-icon">
-                    {msg.role === 'assistant' ? <LuBot size={14} /> : <LuUser size={14} />}
-                  </div>
                   <div className="chatbot-msg-bubble">
                     {msg.content}
                   </div>
@@ -263,9 +260,6 @@ export default function ChatBot() {
                   initial={{ opacity: 0, y: 8 }}
                   animate={{ opacity: 1, y: 0 }}
                 >
-                  <div className="chatbot-msg-icon">
-                    <LuBot size={14} />
-                  </div>
                   <div className="chatbot-msg-bubble chatbot-typing">
                     <span /><span /><span />
                   </div>
