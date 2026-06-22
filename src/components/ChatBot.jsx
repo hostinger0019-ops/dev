@@ -4,10 +4,10 @@ import { LuMessageSquare, LuX, LuSend, LuSparkles, LuChevronDown } from 'react-i
 import './ChatBot.css';
 
 const isDev = import.meta.env.DEV;
-const CEREBRAS_API_URL = isDev
-  ? '/api/cerebras/v1/chat/completions'
-  : 'https://api.cerebras.ai/v1/chat/completions';
-const API_KEY = import.meta.env.VITE_CEREBRAS_API_KEY;
+const API_URL = isDev
+  ? '/api/openai/v1/chat/completions'
+  : 'https://api.openai.com/v1/chat/completions';
+const API_KEY = import.meta.env.VITE_OPENAI_API_KEY;
 
 const SYSTEM_PROMPT = `You are Tarik — the founder of Tarik Services. You are chatting on your website with visitors who found you through a YouTube ad about professional websites starting at ₹25,000.
 
@@ -291,16 +291,16 @@ export default function ChatBot() {
         ...newMessages.map((m) => ({ role: m.role, content: m.content })),
       ];
 
-      const res = await fetch(CEREBRAS_API_URL, {
+      const res = await fetch(API_URL, {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',
           Authorization: `Bearer ${API_KEY}`,
         },
         body: JSON.stringify({
-          model: 'gpt-oss-120b',
+          model: 'gpt-4o-mini',
           messages: apiMessages,
-          max_completion_tokens: 300,
+          max_completion_tokens: 500,
           temperature: 0.7,
         }),
       });

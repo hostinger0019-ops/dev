@@ -6,10 +6,10 @@ export default defineConfig({
   plugins: [react()],
   server: {
     proxy: {
-      '/api/cerebras': {
-        target: 'https://api.cerebras.ai',
+      '/api/openai': {
+        target: 'https://api.openai.com',
         changeOrigin: true,
-        rewrite: (path) => path.replace(/^\/api\/cerebras/, ''),
+        rewrite: (path) => path.replace(/^\/api\/openai/, ''),
         secure: true,
       },
     },
