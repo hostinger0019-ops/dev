@@ -41,7 +41,7 @@ const QUICK_PROMPTS = [
 ];
 
 export default function ChatBot() {
-  const [isOpen, setIsOpen] = useState(false);
+  const [isOpen, setIsOpen] = useState(true);
   const [messages, setMessages] = useState([
     {
       role: 'assistant',
@@ -56,6 +56,7 @@ export default function ChatBot() {
   const inputRef = useRef(null);
   const windowRef = useRef(null);
   const messagesContainerRef = useRef(null);
+  const hasSentAuto = useRef(false);
 
   const scrollToBottom = useCallback(() => {
     messagesEndRef.current?.scrollIntoView({ behavior: 'smooth' });
@@ -94,6 +95,16 @@ export default function ChatBot() {
     }, 5000);
     return () => clearTimeout(timer);
   }, [isOpen]);
+
+  // Auto-send greeting message to AI on first load
+  useEffect(() => {
+    if (hasSentAuto.current) return;
+    hasSentAuto.current = true;
+    const timer = setTimeout(() => {
+      sendMessage('Hi');
+    }, 1500);
+    return () => clearTimeout(timer);
+  }, []); // eslint-disable-line react-hooks/exhaustive-deps
 
   // WhatsApp-style: resize chat window when virtual keyboard opens/closes
   useEffect(() => {
