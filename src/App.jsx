@@ -1,8 +1,7 @@
-import { useState, useCallback } from 'react';
 import { Routes, Route, useLocation } from 'react-router-dom';
 import { CursorProvider } from './context/CursorContext';
 import CustomCursor from './components/CustomCursor';
-import PageIntro from './components/PageIntro';
+
 import Navbar from './components/Navbar';
 import Footer from './components/Footer';
 import ChatBot from './components/ChatBot';
@@ -26,22 +25,16 @@ import PrivacyPolicy from './pages/PrivacyPolicy';
 import TermsConditions from './pages/TermsConditions';
 
 export default function App() {
-  const [introComplete, setIntroComplete] = useState(false);
   const location = useLocation();
   const isHome = location.pathname === '/';
   const isDemoPage = ['/restaurant', '/realestate', '/ecommerce', '/salon', '/dental', '/wedding', '/gym', '/lawfirm', '/education', '/travel', '/photography', '/interiordesign', '/hotel', '/cardealership', '/bakery', '/privacy-policy', '/terms-and-conditions'].includes(location.pathname);
 
-  const handleIntroComplete = useCallback(() => {
-    setIntroComplete(true);
-  }, []);
-
   return (
     <CursorProvider>
       <CustomCursor />
-      {isHome && <PageIntro onComplete={handleIntroComplete} />}
       {!isDemoPage && <Navbar />}
       <Routes>
-        <Route path="/" element={<LandingPage introComplete={introComplete} />} />
+        <Route path="/" element={<LandingPage introComplete={true} />} />
         <Route path="/ecommerce" element={<EcommercePage />} />
         <Route path="/realestate" element={<RealEstatePage />} />
         <Route path="/restaurant" element={<RestaurantPage />} />
