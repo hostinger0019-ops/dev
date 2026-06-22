@@ -9,35 +9,43 @@ const CEREBRAS_API_URL = isDev
   : 'https://api.cerebras.ai/v1/chat/completions';
 const API_KEY = import.meta.env.VITE_CEREBRAS_API_KEY;
 
-const SYSTEM_PROMPT = `You are Tarik AI — the smart assistant for Tarik Services, a premium web development & digital solutions agency based in India.
+const SYSTEM_PROMPT = `You are Tarik — a friendly, persuasive sales expert for Tarik Services, a premium web development agency based in India. You are chatting with visitors who came from a YouTube ad about websites starting at ₹25,000.
 
-Your personality: Friendly, professional, concise. Use occasional emojis. Keep answers SHORT (2-4 sentences max).
+Your ONLY goal: Convince the visitor to pay the ₹5,000 token amount to book their project slot.
 
-What Tarik Services offers:
-- Website Development (React, Next.js, WordPress)
-- App Development (React Native, Flutter)
-- UI/UX Design
-- SEO & Digital Marketing
-- E-Commerce Solutions
-- Branding & Logo Design
+Sales approach:
+1. GREET warmly, acknowledge they saw the ad
+2. QUALIFY — ask what industry/business they have (restaurant, salon, real estate, etc.)
+3. SHOW VALUE — mention we have 15+ ready-to-customize industry demos. Suggest they check the live demo for their industry on our site
+4. CREATE URGENCY — "We only take 5 projects per week" / "This month's price is special"
+5. HANDLE OBJECTIONS — if they say too expensive, explain ROI, compare to competitors charging ₹1-2 lakh
+6. CLOSE — ask them to pay ₹5,000 token to book their slot. When ready to close, include [PAY_NOW] at the END of your message
 
-Industry demos available: Restaurant, Real Estate, E-Commerce, Salon, Dental, Wedding, Gym, Law Firm, Education, Travel, Photography, Interior Design, Hotel, Car Dealership, Bakery/Café.
+Pricing:
+- Starter websites: ₹25,000 (what the ad says)
+- E-commerce: ₹45,000
+- Full apps: ₹1,00,000+
+- Token to book: ₹5,000 (adjusted from final price)
 
-Pricing: Custom quotes based on project scope. Starter websites from ₹15,000. E-commerce from ₹35,000. Full apps from ₹1,00,000+.
-
-Contact: tarik@tarikservices.in | +91 98XXX XXXXX | Based in New Delhi, India.
+Industry demos on our site: Restaurant, Real Estate, E-Commerce, Salon, Dental, Wedding, Gym, Law Firm, Education, Travel, Photography, Interior Design, Hotel, Car Dealership, Bakery
 
 Rules:
-- Always answer as Tarik AI assistant
-- If asked something unrelated to web dev/business, politely redirect
-- Suggest exploring demo pages when relevant
-- Be enthusiastic about helping businesses grow online`;
+- Keep messages SHORT (2-4 sentences). Be conversational, use emojis occasionally
+- Talk in Hinglish if the user writes in Hindi
+- NEVER mention you are AI. You are "Tarik" — a real person
+- If asked unrelated questions, politely bring conversation back to their website needs
+- After 3-4 messages of conversation, start pushing toward payment
+- When you say the final closing line asking them to pay, add [PAY_NOW] at the very end of that message. Only use [PAY_NOW] once per conversation, at the right closing moment
+- If user hesitates after seeing payment, suggest WhatsApp: "You can also reach me on WhatsApp for any questions!"`;
+
+const PAYMENT_URL = 'https://razorpay.me/@tarikweb';
+const WHATSAPP_URL = 'https://wa.me/918448abortyour10digitnumber';
 
 const QUICK_PROMPTS = [
-  '💰 Pricing info',
-  '🛠️ Services offered',
-  '📱 App development',
-  '🎨 View demos',
+  '💰 ₹25K website details',
+  '🎨 See live demos',
+  '📅 Book my slot',
+  '🔥 This month\'s offer',
 ];
 
 export default function ChatBot() {
@@ -45,7 +53,7 @@ export default function ChatBot() {
   const [messages, setMessages] = useState([
     {
       role: 'assistant',
-      content: 'Hey there! 👋 I\'m here to help you today. Ask me about our services, pricing, or explore our industry demos!',
+      content: 'Welcome! 🎉 Great to see you here. I noticed you\'re interested in a premium website — let me help you find the perfect one for your business. What industry are you in?',
     },
   ]);
   const [input, setInput] = useState('');
@@ -96,12 +104,12 @@ export default function ChatBot() {
     return () => clearTimeout(timer);
   }, [isOpen]);
 
-  // Auto-send greeting message to AI on first load
+  // Auto-send greeting message on first load
   useEffect(() => {
     if (hasSentAuto.current) return;
     hasSentAuto.current = true;
     const timer = setTimeout(() => {
-      sendMessage('Hi');
+      sendMessage('I saw your YouTube ad about ₹25,000 websites. Tell me more!');
     }, 1500);
     return () => clearTimeout(timer);
   }, []); // eslint-disable-line react-hooks/exhaustive-deps
@@ -260,8 +268,28 @@ export default function ChatBot() {
                   transition={{ duration: 0.25 }}
                 >
                   <div className="chatbot-msg-bubble">
-                    {msg.content}
+                    {msg.content.replace('[PAY_NOW]', '')}
                   </div>
+                  {msg.role === 'assistant' && msg.content.includes('[PAY_NOW]') && (
+                    <div className="chatbot-pay-cta">
+                      <a
+                        href={PAYMENT_URL}
+                        target="_blank"
+                        rel="noopener noreferrer"
+                        className="chatbot-pay-btn"
+                      >
+                        💳 Pay ₹5,000 Token
+                      </a>
+                      <a
+                        href={WHATSAPP_URL}
+                        target="_blank"
+                        rel="noopener noreferrer"
+                        className="chatbot-whatsapp-btn"
+                      >
+                        💬 Chat on WhatsApp
+                      </a>
+                    </div>
+                  )}
                 </motion.div>
               ))}
 

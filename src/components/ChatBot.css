@@ -300,6 +300,66 @@
   border-top-right-radius: 4px;
 }
 
+/* ── Payment CTA & WhatsApp buttons ── */
+.chatbot-pay-cta {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+  margin-top: 10px;
+  width: 100%;
+}
+
+.chatbot-pay-btn {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 6px;
+  padding: 12px 20px;
+  border-radius: 12px;
+  background: #00A884;
+  color: #fff;
+  font-size: 0.85rem;
+  font-weight: 600;
+  font-family: var(--font-body);
+  text-decoration: none;
+  transition: all 0.2s ease;
+  box-shadow: 0 4px 14px rgba(0, 168, 132, 0.3);
+  animation: chatbot-cta-pulse 2s ease-in-out infinite;
+}
+
+.chatbot-pay-btn:hover {
+  background: #00C49A;
+  transform: translateY(-2px);
+  box-shadow: 0 6px 20px rgba(0, 168, 132, 0.4);
+}
+
+@keyframes chatbot-cta-pulse {
+  0%, 100% { box-shadow: 0 4px 14px rgba(0, 168, 132, 0.3); }
+  50% { box-shadow: 0 4px 20px rgba(0, 168, 132, 0.5), 0 0 30px rgba(0, 168, 132, 0.15); }
+}
+
+.chatbot-whatsapp-btn {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 6px;
+  padding: 10px 16px;
+  border-radius: 12px;
+  background: transparent;
+  border: 1px solid rgba(0, 168, 132, 0.3);
+  color: #00A884;
+  font-size: 0.78rem;
+  font-weight: 500;
+  font-family: var(--font-body);
+  text-decoration: none;
+  transition: all 0.2s ease;
+}
+
+.chatbot-whatsapp-btn:hover {
+  background: rgba(0, 168, 132, 0.1);
+  border-color: rgba(0, 168, 132, 0.5);
+}
+
 /* Typing indicator */
 .chatbot-typing {
   display: flex;
