@@ -112,13 +112,13 @@ body::after {
   filter: url(#grain);
   opacity: 0.04;
   pointer-events: none;
-  z-index: 9998;
+  z-index: 999;
 }
 
 /* Restore cursor on touch devices */
 @media (pointer: coarse) {
   body, body * { cursor: auto !important; }
-  body::after { display: none; }
+  body::after { display: none !important; }
 }
 
 /* Hide cursor on all clickable elements too */

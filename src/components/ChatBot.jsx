@@ -53,6 +53,7 @@ export default function ChatBot() {
   const [hasUnread, setHasUnread] = useState(false);
   const messagesEndRef = useRef(null);
   const inputRef = useRef(null);
+  const windowRef = useRef(null);
 
   const scrollToBottom = useCallback(() => {
     messagesEndRef.current?.scrollIntoView({ behavior: 'smooth' });
@@ -76,6 +77,41 @@ export default function ChatBot() {
     }, 5000);
     return () => clearTimeout(timer);
   }, [isOpen]);
+
+  // WhatsApp-style: resize chat window when virtual keyboard opens/closes
+  useEffect(() => {
+    if (!isOpen) return;
+    const vv = window.visualViewport;
+    if (!vv) return;
+    // Only apply on mobile screens
+    const isMobile = window.matchMedia('(max-width: 600px)').matches;
+    if (!isMobile) return;
+
+    const handleResize = () => {
+      const el = windowRef.current;
+      if (!el) return;
+      // Shrink chat window to the visible area above the keyboard
+      el.style.height = `${vv.height}px`;
+      el.style.top = `${vv.offsetTop}px`;
+      // Keep latest messages visible
+      scrollToBottom();
+    };
+
+    // Set initial size
+    handleResize();
+
+    vv.addEventListener('resize', handleResize);
+    vv.addEventListener('scroll', handleResize);
+    return () => {
+      vv.removeEventListener('resize', handleResize);
+      vv.removeEventListener('scroll', handleResize);
+      const el = windowRef.current;
+      if (el) {
+        el.style.height = '';
+        el.style.top = '';
+      }
+    };
+  }, [isOpen, scrollToBottom]);
 
   const sendMessage = async (text) => {
     if (!text.trim() || isLoading) return;
@@ -159,6 +195,7 @@ export default function ChatBot() {
       <AnimatePresence>
         {isOpen && (
           <motion.div
+            ref={windowRef}
             className="chatbot-window"
             initial={{ opacity: 0, y: 20, scale: 0.95 }}
             animate={{ opacity: 1, y: 0, scale: 1 }}
