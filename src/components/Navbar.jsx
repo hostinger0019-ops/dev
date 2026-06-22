@@ -1,7 +1,7 @@
 import { useState, useEffect, useRef } from 'react';
 import { useLocation, useNavigate, Link } from 'react-router-dom';
 import { motion, AnimatePresence } from 'framer-motion';
-import { LuZap, LuMoreVertical, LuShieldCheck, LuFileText, LuMail, LuGlobe } from 'react-icons/lu';
+import { LuZap, LuEllipsisVertical, LuShieldCheck, LuFileText, LuMail, LuGlobe } from 'react-icons/lu';
 import { useCursor } from '../context/CursorContext';
 import MagneticButton from './MagneticButton';
 import './Navbar.css';
@@ -129,7 +129,7 @@ export default function Navbar() {
               animate={{ opacity: 1, y: 0 }}
               transition={{ delay: 0.55, duration: 0.4, ease: [0.4, 0, 0, 1] }}
             >
-              <LuMoreVertical size={16} />
+              <LuEllipsisVertical size={16} />
             </motion.button>
 
             <AnimatePresence>
