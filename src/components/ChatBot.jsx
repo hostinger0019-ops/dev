@@ -34,8 +34,9 @@ export default function ChatBot() {
   const messagesContainerRef = useRef(null);
   const hasSentAuto = useRef(false);
   const sessionIdRef = useRef(null);
+  const sessionReady = useRef(false);
 
-  // Initialize session on mount — get session ID + greeting from backend
+  // Initialize session on mount — get session ID + greeting, then auto-send
   useEffect(() => {
     async function initSession() {
       try {
@@ -44,16 +45,25 @@ export default function ChatBot() {
           const data = await res.json();
           sessionIdRef.current = data.sessionId;
           setMessages([{ role: 'assistant', content: data.greeting }]);
+          sessionReady.current = true;
         } else {
           throw new Error('Init failed');
         }
       } catch {
-        // Fallback — use default greeting without backend session
         setMessages([{ role: 'assistant', content: DEFAULT_GREETING }]);
+        sessionReady.current = true;
+      }
+
+      // Auto-send first message after session is ready
+      if (!hasSentAuto.current) {
+        hasSentAuto.current = true;
+        setTimeout(() => {
+          sendMessage('YouTube pe aapka ad dekha tha ₹25,000 wali website ke baare mein. Mujhe apne business ke liye chahiye!');
+        }, 1200);
       }
     }
     initSession();
-  }, []);
+  }, []); // eslint-disable-line react-hooks/exhaustive-deps
 
   const scrollToBottom = useCallback(() => {
     messagesEndRef.current?.scrollIntoView({ behavior: 'smooth' });
@@ -70,7 +80,6 @@ export default function ChatBot() {
 
     const handleScroll = () => {
       const { scrollTop, scrollHeight, clientHeight } = container;
-      // Show button when user scrolls more than 100px from bottom
       setShowScrollBtn(scrollHeight - scrollTop - clientHeight > 100);
     };
 
@@ -92,16 +101,6 @@ export default function ChatBot() {
     }, 5000);
     return () => clearTimeout(timer);
   }, [isOpen]);
-
-  // Auto-send greeting message on first load
-  useEffect(() => {
-    if (hasSentAuto.current) return;
-    hasSentAuto.current = true;
-    const timer = setTimeout(() => {
-      sendMessage('YouTube pe aapka ad dekha tha ₹25,000 wali website ke baare mein. Mujhe apne business ke liye chahiye!');
-    }, 1500);
-    return () => clearTimeout(timer);
-  }, []); // eslint-disable-line react-hooks/exhaustive-deps
 
   // WhatsApp-style: resize chat window when virtual keyboard opens/closes
   useEffect(() => {
