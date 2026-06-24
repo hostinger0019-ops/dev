@@ -200,7 +200,7 @@ export default function ChatBot() {
       {/* WhatsApp Button */}
       <motion.a
         className={`whatsapp-fab ${isOpen ? 'hidden' : ''}`}
-        href="https://wa.me/918569998653"
+        href="https://wa.me/918569998653?text=Hi%20Tarik%2C%20I%20visited%20your%20website%20and%20I%27m%20interested%20in%20getting%20a%20website%20built%20for%20my%20business."
         target="_blank"
         rel="noopener noreferrer"
         whileHover={{ scale: 1.08 }}
