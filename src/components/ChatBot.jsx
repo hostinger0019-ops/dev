@@ -3,8 +3,10 @@ import { motion, AnimatePresence } from 'framer-motion';
 import { LuMessageSquare, LuX, LuSend, LuSparkles, LuChevronDown } from 'react-icons/lu';
 import './ChatBot.css';
 
-// Backend API URL — set in .env
-const API_BASE = import.meta.env.VITE_CHATBOT_API_URL || 'http://localhost:3700';
+// Backend API URL
+const API_BASE = import.meta.env.DEV
+  ? 'http://localhost:3700'
+  : 'https://agentforja.com/chatbot-api';
 
 const PAYMENT_URL = 'https://razorpay.me/@tarikweb';
 const WHATSAPP_URL = 'https://wa.me/918448abortyour10digitnumber';
