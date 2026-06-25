@@ -4,8 +4,9 @@ import { LuX, LuShield, LuClock, LuSparkles, LuArrowRight, LuPhone, LuUser, LuBr
 import './BookingModal.css';
 
 const WHATSAPP_NUMBER = '918569998653';
+const API_BASE = import.meta.env.VITE_CHATBOT_API_URL || 'http://localhost:3700';
 const RAZORPAY_KEY = 'rzp_live_T5qGiTdJMDaPrs';
-const TOKEN_AMOUNT = 2500; // in INR
+const TOKEN_AMOUNT = 2500;
 
 const industries = [
   'Restaurant / Cafe',
@@ -86,36 +87,80 @@ export default function BookingModal({ isOpen, onClose }) {
       return;
     }
 
+    // Step 1: Create order on backend
+    let orderId;
+    try {
+      const res = await fetch(`${API_BASE}/api/booking/create-order`, {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ name, phone, industry, amount: TOKEN_AMOUNT }),
+      });
+      const data = await res.json();
+      if (!res.ok) throw new Error(data.error || 'Order creation failed');
+      orderId = data.orderId;
+    } catch (err) {
+      alert('Could not create order. Please try again.');
+      setPaying(false);
+      return;
+    }
+
+    // Step 2: Open Razorpay checkout with order_id
     const options = {
       key: RAZORPAY_KEY,
-      amount: TOKEN_AMOUNT * 100, // Razorpay expects paise
+      amount: TOKEN_AMOUNT * 100,
       currency: 'INR',
       name: 'Tarik Web',
       description: `Website Booking Token - ${industry}`,
       image: 'https://tarikweb.com/favicon.ico',
+      order_id: orderId,
       prefill: {
         name: name,
         contact: phone,
-      },
-      notes: {
-        customer_name: name,
-        customer_phone: phone,
-        industry: industry,
-        booking_type: 'website_token',
       },
       theme: {
         color: '#7C6FFF',
         backdrop_color: 'rgba(0,0,0,0.7)',
       },
-      handler: function (response) {
-        // Payment successful — redirect to success page
-        const params = new URLSearchParams({
-          payment_id: response.razorpay_payment_id,
-          name: name,
-          phone: phone,
-          industry: industry,
-        });
-        window.location.href = `/payment-success?${params.toString()}`;
+      handler: async function (response) {
+        // Step 3: Verify payment on backend
+        try {
+          const verifyRes = await fetch(`${API_BASE}/api/booking/verify`, {
+            method: 'POST',
+            headers: { 'Content-Type': 'application/json' },
+            body: JSON.stringify({
+              razorpay_order_id: response.razorpay_order_id,
+              razorpay_payment_id: response.razorpay_payment_id,
+              razorpay_signature: response.razorpay_signature,
+              name,
+              phone,
+              industry,
+            }),
+          });
+          const verifyData = await verifyRes.json();
+
+          if (verifyData.verified) {
+            // Redirect to success page
+            const params = new URLSearchParams({
+              payment_id: response.razorpay_payment_id,
+              name: name,
+              phone: phone,
+              industry: industry,
+            });
+            window.location.href = `/payment-success?${params.toString()}`;
+          } else {
+            alert('Payment verification failed. Contact us on WhatsApp.');
+            setPaying(false);
+          }
+        } catch {
+          // Even if verify API fails, payment happened — redirect with payment_id
+          const params = new URLSearchParams({
+            payment_id: response.razorpay_payment_id,
+            name: name,
+            phone: phone,
+            industry: industry,
+          });
+          window.location.href = `/payment-success?${params.toString()}`;
+        }
       },
       modal: {
         ondismiss: function () {
@@ -127,7 +172,7 @@ export default function BookingModal({ isOpen, onClose }) {
     };
 
     const rzp = new window.Razorpay(options);
-    rzp.on('payment.failed', function (response) {
+    rzp.on('payment.failed', function () {
       alert('Payment failed. Please try again or contact us on WhatsApp.');
       setPaying(false);
     });

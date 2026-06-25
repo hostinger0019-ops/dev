@@ -20,6 +20,8 @@ const rateLimit = require('express-rate-limit');
 const { v4: uuidv4 } = require('uuid');
 const { generateChatResponse } = require('./lib/openaiService');
 const sessionStore = require('./lib/sessionStore');
+const { saveConversation, getAllConversations } = require('./lib/conversationLogger');
+const { createOrder, verifyPayment, saveBooking, getAllBookings } = require('./lib/bookingService');
 
 // ─── Config ─────────────────────────────────────────────────────────
 const PORT = process.env.PORT || 3700;
@@ -111,6 +113,10 @@ app.post('/api/chat', chatLimiter, async (req, res) => {
 
     console.log(`✅ Reply: "${reply.substring(0, 80)}${reply.length > 80 ? '...' : ''}"`);
 
+    // Save conversation to disk
+    const allMessages = sessionStore.getMessages(sessionId);
+    saveConversation(sessionId, allMessages);
+
     res.json({
       reply,
       sessionId,
@@ -134,6 +140,9 @@ app.post('/api/chat/init', chatLimiter, async (req, res) => {
 
     // Store assistant greeting in session
     sessionStore.addMessage(sessionId, 'assistant', greeting);
+
+    // Save to disk
+    saveConversation(sessionId, [{ role: 'assistant', content: greeting }]);
 
     console.log(`🆕 New session initialized: ${sessionId.substring(0, 8)}...`);
 
@@ -185,6 +194,12 @@ app.delete('/api/chat/session', (req, res) => {
   res.json({ success: true, message: 'Session deleted.' });
 });
 
+// ─── GET /api/conversations — Admin: view all saved conversations ───
+app.get('/api/conversations', (req, res) => {
+  const conversations = getAllConversations();
+  res.json({ total: conversations.length, conversations });
+});
+
 // ─── 404 Handler ────────────────────────────────────────────────────
 app.use((req, res) => {
   res.status(404).json({ error: 'Not found' });
@@ -194,6 +209,96 @@ app.use((req, res) => {
 app.use((err, req, res, next) => {
   console.error('💥 Unhandled Error:', err.message);
   res.status(500).json({ error: 'Internal server error' });
+});
+
+// ═══════════════════════════════════════════════════════════════════
+// BOOKING / RAZORPAY ENDPOINTS
+// ═══════════════════════════════════════════════════════════════════
+
+/**
+ * POST /api/booking/create-order
+ * Creates a Razorpay order. Frontend needs this order_id to open checkout.
+ */
+app.post('/api/booking/create-order', async (req, res) => {
+  try {
+    const { name, phone, industry, amount = 2500 } = req.body;
+
+    if (!name || !phone || !industry) {
+      return res.status(400).json({ error: 'Missing required fields: name, phone, industry' });
+    }
+
+    const order = await createOrder({
+      amount,
+      notes: {
+        customer_name: name,
+        customer_phone: phone,
+        industry,
+        booking_type: 'website_token',
+      },
+    });
+
+    console.log(`📦 Order created: ${order.id} for ${name} (${industry})`);
+    res.json({ orderId: order.id, amount: order.amount, currency: order.currency });
+  } catch (err) {
+    console.error('❌ Order creation failed:', err.message);
+    res.status(500).json({ error: 'Failed to create order. Please try again.' });
+  }
+});
+
+/**
+ * POST /api/booking/verify
+ * Verifies Razorpay payment signature and saves the booking.
+ */
+app.post('/api/booking/verify', async (req, res) => {
+  try {
+    const { razorpay_order_id, razorpay_payment_id, razorpay_signature, name, phone, industry } = req.body;
+
+    if (!razorpay_order_id || !razorpay_payment_id || !razorpay_signature) {
+      return res.status(400).json({ error: 'Missing payment details' });
+    }
+
+    // Verify signature
+    const isValid = verifyPayment({ razorpay_order_id, razorpay_payment_id, razorpay_signature });
+
+    if (!isValid) {
+      console.error(`❌ Payment verification FAILED for order ${razorpay_order_id}`);
+      return res.status(400).json({ error: 'Payment verification failed', verified: false });
+    }
+
+    // Save booking
+    saveBooking({
+      name: name || 'Unknown',
+      phone: phone || 'Unknown',
+      industry: industry || 'Unknown',
+      paymentId: razorpay_payment_id,
+      orderId: razorpay_order_id,
+      amount: 2500,
+      status: 'PAID ✅',
+    });
+
+    console.log(`✅ Payment VERIFIED: ${razorpay_payment_id} — ${name} (${industry})`);
+    res.json({
+      verified: true,
+      paymentId: razorpay_payment_id,
+      message: 'Payment verified and booking confirmed!',
+    });
+  } catch (err) {
+    console.error('❌ Payment verification error:', err.message);
+    res.status(500).json({ error: 'Verification failed', verified: false });
+  }
+});
+
+/**
+ * GET /api/bookings
+ * Lists all saved bookings (admin use).
+ */
+app.get('/api/bookings', (req, res) => {
+  try {
+    const bookings = getAllBookings();
+    res.json({ total: bookings.length, bookings });
+  } catch (err) {
+    res.status(500).json({ error: 'Failed to fetch bookings' });
+  }
 });
 
 // ─── Start Server ───────────────────────────────────────────────────
