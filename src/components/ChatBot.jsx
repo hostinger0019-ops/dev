@@ -36,7 +36,7 @@ export default function ChatBot() {
   const sessionIdRef = useRef(null);
   const sessionReady = useRef(false);
 
-  // Initialize session on mount — get session ID + greeting, then auto-send
+  // Initialize session on mount — get session ID + greeting
   useEffect(() => {
     async function initSession() {
       try {
@@ -53,17 +53,9 @@ export default function ChatBot() {
         setMessages([{ role: 'assistant', content: DEFAULT_GREETING }]);
         sessionReady.current = true;
       }
-
-      // Auto-send first message after session is ready
-      if (!hasSentAuto.current) {
-        hasSentAuto.current = true;
-        setTimeout(() => {
-          sendMessage('YouTube pe aapka ad dekha tha ₹25,000 wali website ke baare mein. Mujhe apne business ke liye chahiye!');
-        }, 1200);
-      }
     }
     initSession();
-  }, []); // eslint-disable-line react-hooks/exhaustive-deps
+  }, []);
 
   const scrollToBottom = useCallback(() => {
     messagesEndRef.current?.scrollIntoView({ behavior: 'smooth' });
