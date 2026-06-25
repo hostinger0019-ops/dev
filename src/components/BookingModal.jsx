@@ -25,7 +25,7 @@ const benefits = [
   { icon: '🌐', text: 'Free Domain Setup' },
   { icon: '🖥️', text: 'Free Hosting (1 Year)' },
   { icon: '📈', text: 'Free SEO Ranking' },
-  { icon: '📱', text: 'Mobile Responsive' },
+  { icon: '📱', text: 'Mobile Responsive Design' },
   { icon: '⚡', text: 'Delivery in 7 Days' },
 ];
 
@@ -33,14 +33,12 @@ export default function BookingModal({ isOpen, onClose }) {
   const [name, setName] = useState('');
   const [phone, setPhone] = useState('');
   const [industry, setIndustry] = useState('');
-  const [step, setStep] = useState(0); // 0 = offer screen, 1 = name+phone, 2 = industry+pay
+  const [step, setStep] = useState(0);
 
-  // Countdown timer for urgency
   const [timeLeft, setTimeLeft] = useState({ hours: 2, minutes: 0, seconds: 0 });
 
   useEffect(() => {
     if (!isOpen) return;
-    // Reset to offer screen when modal opens
     setStep(0);
     const interval = setInterval(() => {
       setTimeLeft(prev => {
@@ -58,7 +56,6 @@ export default function BookingModal({ isOpen, onClose }) {
 
   const handlePayToken = () => {
     if (!industry) return;
-    // TODO: Integrate Razorpay here
     const msg = `🎉 NEW BOOKING!\n\nName: ${name}\nPhone: ${phone}\nIndustry: ${industry}\nToken: ₹2,500\n\nI want to book my website slot!`;
     window.open(`https://wa.me/${WHATSAPP_NUMBER}?text=${encodeURIComponent(msg)}`, '_blank');
   };
@@ -90,21 +87,20 @@ export default function BookingModal({ isOpen, onClose }) {
             transition={{ type: 'spring', stiffness: 300, damping: 28 }}
             onClick={(e) => e.stopPropagation()}
           >
-            {/* Close button */}
             <button className="booking-close" onClick={onClose} aria-label="Close">
               <LuX size={18} />
             </button>
 
-            {/* Urgency Banner — always visible */}
+            {/* Urgency Banner */}
             <div className="booking-urgency">
               <LuClock size={14} />
               <span>Offer expires in <strong>{pad(timeLeft.hours)}:{pad(timeLeft.minutes)}:{pad(timeLeft.seconds)}</strong></span>
-              <span className="booking-slots">• Sirf 3 slots bache!</span>
+              <span className="booking-slots">• Only 3 slots left!</span>
             </div>
 
             <AnimatePresence mode="wait">
 
-              {/* ═══ STEP 0: Offer Screen (No inputs) ═══ */}
+              {/* ═══ STEP 0: Offer Screen ═══ */}
               {step === 0 && (
                 <motion.div
                   key="step0"
@@ -114,23 +110,21 @@ export default function BookingModal({ isOpen, onClose }) {
                   exit={{ opacity: 0, x: -30 }}
                   transition={{ duration: 0.25 }}
                 >
-                  {/* Hero pricing */}
                   <div className="booking-offer-hero">
                     <div className="booking-icon">
                       <LuSparkles size={24} />
                     </div>
-                    <h2 className="booking-title">₹25,000 ki Website</h2>
+                    <h2 className="booking-title">₹25,000 Website</h2>
                     <div className="booking-offer-price">
                       <span className="booking-original-price">₹25,000</span>
-                      <span className="booking-token-price">Sirf ₹2,500 mein book karo</span>
+                      <span className="booking-token-price">Book for just ₹2,500</span>
                     </div>
-                    <p className="booking-offer-note">Token amount — adjust hoga final price mein</p>
+                    <p className="booking-offer-note">Token amount — adjustable in final price</p>
                   </div>
 
-                  {/* Benefits list */}
                   <div className="booking-benefits-list">
                     <h3 className="booking-benefits-title">
-                      <LuGift size={16} /> Ye sab FREE milega:
+                      <LuGift size={16} /> What you get FREE:
                     </h3>
                     {benefits.map((b, i) => (
                       <div key={i} className="booking-benefit-item">
@@ -141,21 +135,19 @@ export default function BookingModal({ isOpen, onClose }) {
                     ))}
                   </div>
 
-                  {/* Warning */}
                   <div className="booking-warning">
                     <span className="booking-warning-icon">⚠️</span>
-                    Agar abhi book nahi kiya toh ye free benefits — hosting, domain aur SEO — queue mein next business ko mil jayenge!
+                    If you don't book now, these free benefits — hosting, domain & SEO — will go to the next business in queue!
                   </div>
 
-                  {/* CTA */}
                   <button className="booking-cta-btn" onClick={() => setStep(1)}>
                     <LuZap size={18} />
-                    Haan, Mujhe Book Karna Hai!
+                    Yes, I Want to Book!
                     <LuArrowRight size={16} />
                   </button>
 
                   <button className="booking-wa-btn-alt" onClick={handleWhatsApp}>
-                    Pehle WhatsApp pe baat karni hai →
+                    Talk on WhatsApp first →
                   </button>
                 </motion.div>
               )}
@@ -172,7 +164,7 @@ export default function BookingModal({ isOpen, onClose }) {
                 >
                   <div className="booking-step-header">
                     <span className="booking-step-num">1/2</span>
-                    <h2 className="booking-step-title">Apni Details Daalein</h2>
+                    <h2 className="booking-step-title">Your Details</h2>
                   </div>
 
                   <div className="booking-form">
@@ -180,7 +172,7 @@ export default function BookingModal({ isOpen, onClose }) {
                       <LuUser className="booking-field-icon" size={16} />
                       <input
                         type="text"
-                        placeholder="Aapka Naam"
+                        placeholder="Your Name"
                         value={name}
                         onChange={(e) => setName(e.target.value)}
                         className="booking-input"
@@ -204,7 +196,7 @@ export default function BookingModal({ isOpen, onClose }) {
                       onClick={() => setStep(2)}
                       disabled={name.trim().length < 2 || phone.trim().length < 10}
                     >
-                      Next — Website Choose Karein
+                      Next — Choose Your Website
                       <LuArrowRight size={16} />
                     </button>
 
@@ -227,7 +219,7 @@ export default function BookingModal({ isOpen, onClose }) {
                 >
                   <div className="booking-step-header">
                     <span className="booking-step-num">2/2</span>
-                    <h2 className="booking-step-title">Website Kaunsi Chahiye?</h2>
+                    <h2 className="booking-step-title">Choose Your Industry</h2>
                   </div>
 
                   <div className="booking-form">
@@ -238,7 +230,7 @@ export default function BookingModal({ isOpen, onClose }) {
                         onChange={(e) => setIndustry(e.target.value)}
                         className="booking-input booking-select"
                       >
-                        <option value="">Industry Select Karein</option>
+                        <option value="">Select Your Industry</option>
                         {industries.map((ind) => (
                           <option key={ind} value={ind}>{ind}</option>
                         ))}
@@ -255,7 +247,7 @@ export default function BookingModal({ isOpen, onClose }) {
                     </button>
 
                     <div className="booking-divider">
-                      <span>ya</span>
+                      <span>or</span>
                     </div>
 
                     <button className="booking-wa-btn" onClick={handleWhatsApp}>
@@ -274,10 +266,9 @@ export default function BookingModal({ isOpen, onClose }) {
 
             </AnimatePresence>
 
-            {/* Trust badges — always visible */}
             <div className="booking-trust">
               <span>🔒 100% Secure</span>
-              <span>💸 Token Adjust in Final Price</span>
+              <span>💸 Token Adjusted in Final Price</span>
               <span>⭐ 50+ Happy Clients</span>
             </div>
           </motion.div>
