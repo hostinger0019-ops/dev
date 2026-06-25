@@ -20,10 +20,12 @@
   width: 100%;
   max-width: 420px;
   max-height: calc(100dvh - 32px);
-  overflow-y: auto;
+  display: flex;
+  flex-direction: column;
   background: #0E0E12;
   border: 1px solid rgba(255, 255, 255, 0.06);
   border-radius: 20px;
+  overflow: hidden;
   box-shadow:
     0 24px 80px rgba(0, 0, 0, 0.7),
     0 0 120px rgba(124, 111, 255, 0.06);
@@ -88,6 +90,20 @@
 /* ── Step container ── */
 .booking-step {
   padding: 20px 20px 16px;
+  overflow-y: auto;
+  flex: 1;
+  min-height: 0;
+}
+
+.booking-step::-webkit-scrollbar { width: 3px; }
+.booking-step::-webkit-scrollbar-thumb { background: rgba(255,255,255,0.1); border-radius: 4px; }
+
+/* ── Sticky CTA footer ── */
+.booking-sticky-cta {
+  padding: 16px 20px;
+  background: #0E0E12;
+  border-top: 1px solid rgba(255, 255, 255, 0.06);
+  flex-shrink: 0;
 }
 
 /* ── STEP 0: Offer Screen ── */
@@ -205,7 +221,7 @@
   font-size: 0.75rem;
   font-family: var(--font-body);
   line-height: 1.55;
-  margin: 10px 0 16px;
+  margin: 10px 0 0;
 }
 
 .booking-warning-icon {
@@ -468,27 +484,63 @@
   }
 
   .booking-step {
-    padding: 16px 16px 12px;
+    padding: 14px 16px 12px;
+  }
+
+  .booking-offer-hero {
+    padding: 4px 0 10px;
+  }
+
+  .booking-icon {
+    width: 42px;
+    height: 42px;
+    margin-bottom: 10px;
   }
 
   .booking-title {
-    font-size: 1.3rem;
+    font-size: 1.25rem;
+    margin-bottom: 6px;
+  }
+
+  .booking-token-price {
+    font-size: 1.05rem;
+  }
+
+  .booking-benefits-list {
+    padding: 8px 0;
   }
 
   .booking-benefit-item {
-    padding: 8px 10px;
+    padding: 7px 10px;
+    margin-bottom: 4px;
   }
 
   .booking-benefit-text {
-    font-size: 0.78rem;
+    font-size: 0.76rem;
   }
 
   .booking-warning {
-    font-size: 0.72rem;
+    font-size: 0.7rem;
+    padding: 9px 12px;
+    margin: 8px 0 0;
+  }
+
+  .booking-sticky-cta {
+    padding: 12px 16px;
+    padding-bottom: calc(12px + env(safe-area-inset-bottom, 0px));
+  }
+
+  .booking-cta-btn {
+    padding: 14px;
+    font-size: 0.88rem;
   }
 
   .booking-trust {
     gap: 10px;
-    padding: 10px 12px 14px;
+    padding: 8px 12px 12px;
+  }
+
+  .booking-trust span {
+    font-size: 0.58rem;
   }
 }

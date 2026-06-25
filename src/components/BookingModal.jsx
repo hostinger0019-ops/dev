@@ -139,16 +139,6 @@ export default function BookingModal({ isOpen, onClose }) {
                     <span className="booking-warning-icon">⚠️</span>
                     If you don't book now, these free benefits — hosting, domain & SEO — will go to the next business in queue!
                   </div>
-
-                  <button className="booking-cta-btn" onClick={() => setStep(1)}>
-                    <LuZap size={18} />
-                    Yes, I Want to Book!
-                    <LuArrowRight size={16} />
-                  </button>
-
-                  <button className="booking-wa-btn-alt" onClick={handleWhatsApp}>
-                    Talk on WhatsApp first →
-                  </button>
                 </motion.div>
               )}
 
@@ -265,6 +255,20 @@ export default function BookingModal({ isOpen, onClose }) {
               )}
 
             </AnimatePresence>
+
+            {/* Sticky CTA — always visible at bottom on step 0 */}
+            {step === 0 && (
+              <div className="booking-sticky-cta">
+                <button className="booking-cta-btn" onClick={() => setStep(1)}>
+                  <LuZap size={18} />
+                  Yes, I Want to Book!
+                  <LuArrowRight size={16} />
+                </button>
+                <button className="booking-wa-btn-alt" onClick={handleWhatsApp}>
+                  Talk on WhatsApp first →
+                </button>
+              </div>
+            )}
 
             <div className="booking-trust">
               <span>🔒 100% Secure</span>
