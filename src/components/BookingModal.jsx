@@ -90,7 +90,7 @@ export default function BookingModal({ isOpen, onClose }) {
       key: RAZORPAY_KEY,
       amount: TOKEN_AMOUNT * 100, // Razorpay expects paise
       currency: 'INR',
-      name: 'Tarik Services',
+      name: 'Tarik Web',
       description: `Website Booking Token - ${industry}`,
       image: 'https://tarikweb.com/favicon.ico',
       prefill: {
