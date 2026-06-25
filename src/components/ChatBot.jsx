@@ -22,7 +22,7 @@ const QUICK_PROMPTS = [
 const DEFAULT_GREETING = 'Hey! 🎉 Accha laga aapko yahan dekh ke. Aap sahi jagah aaye ho — hum aapke business ke liye bilkul perfect website bana sakte hain. Pehle ye batao, aapka naam kya hai?';
 
 export default function ChatBot() {
-  const [isOpen, setIsOpen] = useState(true);
+  const [isOpen, setIsOpen] = useState(false);
   const [messages, setMessages] = useState([]);
   const [input, setInput] = useState('');
   const [isLoading, setIsLoading] = useState(false);
