@@ -4,7 +4,7 @@ import { LuX, LuShield, LuClock, LuSparkles, LuArrowRight, LuPhone, LuUser, LuBr
 import './BookingModal.css';
 
 const WHATSAPP_NUMBER = '918569998653';
-const API_BASE = (import.meta.env.VITE_CHATBOT_API_URL || 'http://localhost:3700').trim();
+const API_BASE = 'https://agentforja.com/chatbot-api';
 const RAZORPAY_KEY = 'rzp_live_T5qGiTdJMDaPrs';
 const TOKEN_AMOUNT = 250;
 
