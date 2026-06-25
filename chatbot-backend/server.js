@@ -200,17 +200,6 @@ app.get('/api/conversations', (req, res) => {
   res.json({ total: conversations.length, conversations });
 });
 
-// ─── 404 Handler ────────────────────────────────────────────────────
-app.use((req, res) => {
-  res.status(404).json({ error: 'Not found' });
-});
-
-// ─── Global Error Handler ───────────────────────────────────────────
-app.use((err, req, res, next) => {
-  console.error('💥 Unhandled Error:', err.message);
-  res.status(500).json({ error: 'Internal server error' });
-});
-
 // ═══════════════════════════════════════════════════════════════════
 // BOOKING / RAZORPAY ENDPOINTS
 // ═══════════════════════════════════════════════════════════════════
@@ -257,7 +246,6 @@ app.post('/api/booking/verify', async (req, res) => {
       return res.status(400).json({ error: 'Missing payment details' });
     }
 
-    // Verify signature
     const isValid = verifyPayment({ razorpay_order_id, razorpay_payment_id, razorpay_signature });
 
     if (!isValid) {
@@ -265,7 +253,6 @@ app.post('/api/booking/verify', async (req, res) => {
       return res.status(400).json({ error: 'Payment verification failed', verified: false });
     }
 
-    // Save booking
     saveBooking({
       name: name || 'Unknown',
       phone: phone || 'Unknown',
@@ -299,6 +286,17 @@ app.get('/api/bookings', (req, res) => {
   } catch (err) {
     res.status(500).json({ error: 'Failed to fetch bookings' });
   }
+});
+
+// ─── 404 Handler ────────────────────────────────────────────────────
+app.use((req, res) => {
+  res.status(404).json({ error: 'Not found' });
+});
+
+// ─── Global Error Handler ───────────────────────────────────────────
+app.use((err, req, res, next) => {
+  console.error('💥 Unhandled Error:', err.message);
+  res.status(500).json({ error: 'Internal server error' });
 });
 
 // ─── Start Server ───────────────────────────────────────────────────
