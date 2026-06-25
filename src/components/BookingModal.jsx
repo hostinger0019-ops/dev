@@ -6,7 +6,7 @@ import './BookingModal.css';
 const WHATSAPP_NUMBER = '918569998653';
 const API_BASE = import.meta.env.VITE_CHATBOT_API_URL || 'http://localhost:3700';
 const RAZORPAY_KEY = 'rzp_live_T5qGiTdJMDaPrs';
-const TOKEN_AMOUNT = 2500;
+const TOKEN_AMOUNT = 250;
 
 const industries = [
   'Restaurant / Cafe',
