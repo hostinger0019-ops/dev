@@ -4,6 +4,8 @@ import { LuX, LuShield, LuClock, LuSparkles, LuArrowRight, LuPhone, LuUser, LuBr
 import './BookingModal.css';
 
 const WHATSAPP_NUMBER = '918569998653';
+const RAZORPAY_KEY = 'rzp_live_T5qGiTdJMDaPrs';
+const TOKEN_AMOUNT = 2500; // in INR
 
 const industries = [
   'Restaurant / Cafe',
@@ -29,17 +31,36 @@ const benefits = [
   { icon: '⚡', text: 'Delivery in 7 Days' },
 ];
 
+// Load Razorpay script
+function loadRazorpayScript() {
+  return new Promise((resolve) => {
+    if (document.getElementById('razorpay-sdk')) {
+      resolve(true);
+      return;
+    }
+    const script = document.createElement('script');
+    script.id = 'razorpay-sdk';
+    script.src = 'https://checkout.razorpay.com/v1/checkout.js';
+    script.onload = () => resolve(true);
+    script.onerror = () => resolve(false);
+    document.body.appendChild(script);
+  });
+}
+
 export default function BookingModal({ isOpen, onClose }) {
   const [name, setName] = useState('');
   const [phone, setPhone] = useState('');
   const [industry, setIndustry] = useState('');
   const [step, setStep] = useState(0);
+  const [paying, setPaying] = useState(false);
 
   const [timeLeft, setTimeLeft] = useState({ hours: 2, minutes: 0, seconds: 0 });
 
   useEffect(() => {
     if (!isOpen) return;
     setStep(0);
+    // Preload Razorpay script
+    loadRazorpayScript();
     const interval = setInterval(() => {
       setTimeLeft(prev => {
         const totalSeconds = prev.hours * 3600 + prev.minutes * 60 + prev.seconds - 1;
@@ -54,10 +75,63 @@ export default function BookingModal({ isOpen, onClose }) {
     return () => clearInterval(interval);
   }, [isOpen]);
 
-  const handlePayToken = () => {
-    if (!industry) return;
-    const msg = `🎉 NEW BOOKING!\n\nName: ${name}\nPhone: ${phone}\nIndustry: ${industry}\nToken: ₹2,500\n\nI want to book my website slot!`;
-    window.open(`https://wa.me/${WHATSAPP_NUMBER}?text=${encodeURIComponent(msg)}`, '_blank');
+  const handlePayToken = async () => {
+    if (!industry || paying) return;
+    setPaying(true);
+
+    const loaded = await loadRazorpayScript();
+    if (!loaded) {
+      alert('Payment system failed to load. Please try again.');
+      setPaying(false);
+      return;
+    }
+
+    const options = {
+      key: RAZORPAY_KEY,
+      amount: TOKEN_AMOUNT * 100, // Razorpay expects paise
+      currency: 'INR',
+      name: 'Tarik Services',
+      description: `Website Booking Token - ${industry}`,
+      image: 'https://tarikweb.com/favicon.ico',
+      prefill: {
+        name: name,
+        contact: phone,
+      },
+      notes: {
+        customer_name: name,
+        customer_phone: phone,
+        industry: industry,
+        booking_type: 'website_token',
+      },
+      theme: {
+        color: '#7C6FFF',
+        backdrop_color: 'rgba(0,0,0,0.7)',
+      },
+      handler: function (response) {
+        // Payment successful — redirect to success page
+        const params = new URLSearchParams({
+          payment_id: response.razorpay_payment_id,
+          name: name,
+          phone: phone,
+          industry: industry,
+        });
+        window.location.href = `/payment-success?${params.toString()}`;
+      },
+      modal: {
+        ondismiss: function () {
+          setPaying(false);
+        },
+        confirm_close: true,
+        escape: false,
+      },
+    };
+
+    const rzp = new window.Razorpay(options);
+    rzp.on('payment.failed', function (response) {
+      alert('Payment failed. Please try again or contact us on WhatsApp.');
+      setPaying(false);
+    });
+    rzp.open();
   };
 
   const handleWhatsApp = () => {
@@ -230,10 +304,10 @@ export default function BookingModal({ isOpen, onClose }) {
                     <button
                       className="booking-pay-btn"
                       onClick={handlePayToken}
-                      disabled={!industry}
+                      disabled={!industry || paying}
                     >
                       <LuShield size={18} />
-                      Pay ₹2,500 Token — Book Now
+                      {paying ? 'Processing...' : 'Pay ₹2,500 Token — Book Now'}
                     </button>
 
                     <div className="booking-divider">
