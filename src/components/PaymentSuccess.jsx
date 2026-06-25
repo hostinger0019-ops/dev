@@ -1,6 +1,6 @@
 import { useEffect } from 'react';
 import { motion } from 'framer-motion';
-import { LuCheckCircle, LuPhone, LuMail, LuArrowRight } from 'react-icons/lu';
+import { LuCircleCheck, LuPhone, LuMail, LuArrowRight } from 'react-icons/lu';
 import './PaymentSuccess.css';
 
 const WHATSAPP_NUMBER = '918569998653';
@@ -64,7 +64,7 @@ export default function PaymentSuccess() {
           animate={{ scale: 1 }}
           transition={{ delay: 0.2, type: 'spring', stiffness: 200, damping: 15 }}
         >
-          <LuCheckCircle size={48} />
+          <LuCircleCheck size={48} />
         </motion.div>
 
         <motion.h1
