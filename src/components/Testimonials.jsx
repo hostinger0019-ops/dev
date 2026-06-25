@@ -8,10 +8,10 @@ import './Testimonials.css';
 const ease = [0.4, 0, 0, 1];
 
 const testimonials = [
-  { text: "Tarik Services ne humari restaurant website banayi aur pehle mahine mein hi 50+ direct orders aaye. Zomato ka 25% commission bach gaya. Ab humari apni online presence hai — best investment ever.", name: 'Rohit Sharma', role: 'Owner, Spice Junction — Delhi', initials: 'RS', avatarClass: 'testimonial-avatar-1', stars: 5 },
-  { text: "Meri salon ki website banayi inhone — online booking feature ke saath. Pehle phone pe booking mushkil tha, ab Google se directly 40+ new appointments aati hain har mahine. Bahut professional kaam kiya.", name: 'Priya Malhotra', role: 'Founder, Glow Studio — Jaipur', initials: 'PM', avatarClass: 'testimonial-avatar-2', stars: 5 },
-  { text: "E-commerce website banayi thi ₹25K mein — admin panel, payment gateway, COD sab included tha. Conversion rate 40% badh gaya. Ye sirf website nahi, complete business solution diya inhone.", name: 'Ankit Verma', role: 'Founder, Urban Thread — Chandigarh', initials: 'AV', avatarClass: 'testimonial-avatar-3', stars: 5 },
-  { text: "Property dealer hoon Noida mein. Pehle 99acres pe leads competitors ko bhi jaati thi. Apni website banayi toh direct inquiries aane lagi — ab daily 5-6 calls aati hain sirf website se. Game changer hai.", name: 'Amit Gupta', role: 'Director, Gupta Properties — Noida', initials: 'AG', avatarClass: 'testimonial-avatar-4', stars: 5 },
+  { text: "Tarik Services ne humari online presence banane mein bahut help ki. Pehle humara koi website nahi tha, ab customers directly contact karte hain. Simple aur professional kaam kiya inhone.", name: 'Rohit Sharma', role: 'Owner, Spice Junction — Delhi', initials: 'RS', avatarClass: 'testimonial-avatar-1', stars: 5 },
+  { text: "Maine socha tha website banana mushkil hoga, lekin Tarik ne sab easy kar diya. Booking system laga diya, ab clients khud appointment book kar lete hain. Bahut smooth experience raha.", name: 'Priya Malhotra', role: 'Founder, Glow Studio — Jaipur', initials: 'PM', avatarClass: 'testimonial-avatar-2', stars: 5 },
+  { text: "Budget tight tha lekin Tarik ne usme bhi achi website bana di. Admin panel diya, payment gateway lagaya — sab kuch manage karna easy ho gaya. Supportive team hai, har doubt clear kiya.", name: 'Ankit Verma', role: 'Founder, Urban Thread — Chandigarh', initials: 'AV', avatarClass: 'testimonial-avatar-3', stars: 5 },
+  { text: "Pehle sirf word of mouth se kaam chalata tha. Website banayi toh Google pe dikhne laga. Ab log search karke direct call karte hain. Isse better investment nahi ho sakti business ke liye.", name: 'Amit Gupta', role: 'Director, Gupta Properties — Noida', initials: 'AG', avatarClass: 'testimonial-avatar-4', stars: 5 },
 ];
 
 /* Blur-to-focus animation */
