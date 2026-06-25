@@ -236,7 +236,7 @@ export default function BookingModal({ isOpen, onClose }) {
                     <h2 className="booking-title">₹25,000 Website</h2>
                     <div className="booking-offer-price">
                       <span className="booking-original-price">₹25,000</span>
-                      <span className="booking-token-price">Book for just ₹2,500</span>
+                      <span className="booking-token-price">Book for just ₹250</span>
                     </div>
                     <p className="booking-offer-note">Token amount — adjustable in final price</p>
                   </div>
@@ -352,7 +352,7 @@ export default function BookingModal({ isOpen, onClose }) {
                       disabled={!industry || paying}
                     >
                       <LuShield size={18} />
-                      {paying ? 'Processing...' : 'Pay ₹2,500 Token — Book Now'}
+                      {paying ? 'Processing...' : 'Pay ₹250 Token — Book Now'}
                     </button>
 
                     <div className="booking-divider">
