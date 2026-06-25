@@ -11,7 +11,7 @@ import './Contact.css';
 const ease = [0.4, 0, 0, 1];
 
 const contactInfo = [
-  { icon: <LuMail />, label: 'Email', value: 'support@agentforja.com' },
+  { icon: <LuMail />, label: 'Email', value: 'support@tarikweb.com' },
   { icon: <LuPhone />, label: 'Phone', value: '+91 85699 98653' },
   { icon: <LuMapPin />, label: 'Location', value: 'Chandigarh, India' },
 ];

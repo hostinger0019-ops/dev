@@ -8,10 +8,10 @@ import './Testimonials.css';
 const ease = [0.4, 0, 0, 1];
 
 const testimonials = [
-  { text: "Tarik Services transformed our vision into a stunning digital platform. Their attention to detail and creative approach exceeded all expectations. The team was responsive, professional, and delivered beyond what we imagined.", name: 'Sarah Chen', role: 'CEO, FinVault', initials: 'SC', avatarClass: 'testimonial-avatar-1', stars: 5 },
-  { text: "Working with Tarik was a game-changer for our mobile app. They understood our requirements perfectly and delivered an app that our users absolutely love. The performance and design quality are outstanding.", name: 'Marcus Johnson', role: 'CTO, FitPulse', initials: 'MJ', avatarClass: 'testimonial-avatar-2', stars: 5 },
-  { text: "The e-commerce platform they built for us increased our conversion rate by 40%. Their UI/UX design expertise is unmatched. They didn't just build a store — they built a complete shopping experience.", name: 'Elena Rodriguez', role: 'Founder, Bloom Fashion', initials: 'ER', avatarClass: 'testimonial-avatar-3', stars: 5 },
-  { text: "Tarik Services is our go-to partner for all things digital. From strategy to execution, they consistently deliver exceptional results. Their proactive approach to problem-solving sets them apart.", name: 'David Park', role: 'VP Engineering, NexusAI', initials: 'DP', avatarClass: 'testimonial-avatar-4', stars: 5 },
+  { text: "Tarik Services ne humari restaurant website banayi aur pehle mahine mein hi 50+ direct orders aaye. Zomato ka 25% commission bach gaya. Ab humari apni online presence hai — best investment ever.", name: 'Rohit Sharma', role: 'Owner, Spice Junction — Delhi', initials: 'RS', avatarClass: 'testimonial-avatar-1', stars: 5 },
+  { text: "Meri salon ki website banayi inhone — online booking feature ke saath. Pehle phone pe booking mushkil tha, ab Google se directly 40+ new appointments aati hain har mahine. Bahut professional kaam kiya.", name: 'Priya Malhotra', role: 'Founder, Glow Studio — Jaipur', initials: 'PM', avatarClass: 'testimonial-avatar-2', stars: 5 },
+  { text: "E-commerce website banayi thi ₹25K mein — admin panel, payment gateway, COD sab included tha. Conversion rate 40% badh gaya. Ye sirf website nahi, complete business solution diya inhone.", name: 'Ankit Verma', role: 'Founder, Urban Thread — Chandigarh', initials: 'AV', avatarClass: 'testimonial-avatar-3', stars: 5 },
+  { text: "Property dealer hoon Noida mein. Pehle 99acres pe leads competitors ko bhi jaati thi. Apni website banayi toh direct inquiries aane lagi — ab daily 5-6 calls aati hain sirf website se. Game changer hai.", name: 'Amit Gupta', role: 'Director, Gupta Properties — Noida', initials: 'AG', avatarClass: 'testimonial-avatar-4', stars: 5 },
 ];
 
 /* Blur-to-focus animation */
