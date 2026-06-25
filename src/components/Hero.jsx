@@ -1,4 +1,4 @@
-import { useCallback, useMemo, useRef } from 'react';
+import { useCallback, useMemo, useRef, useState } from 'react';
 import { motion } from 'framer-motion';
 import { LuArrowRight, LuPlay } from 'react-icons/lu';
 import Particles from '@tsparticles/react';
@@ -9,6 +9,7 @@ import SplitText, { SplitWord } from './SplitText';
 import MagneticButton from './MagneticButton';
 import heroMockup from '../assets/hero-mockup.png';
 import heroBgImg from '../assets/hero-bg.png';
+import BookingModal from './BookingModal';
 import './Hero.css';
 
 const serviceWords = [
@@ -39,6 +40,7 @@ const stagger = {
 };
 
 export default function Hero({ introComplete }) {
+  const [showBooking, setShowBooking] = useState(false);
   const typedText = useTypedText(serviceWords, {
     typeSpeed: 70,
     deleteSpeed: 40,
@@ -183,21 +185,17 @@ export default function Hero({ introComplete }) {
         </motion.p>
 
         <motion.div className="hero-buttons" variants={fadeUp}>
-          <MagneticButton cursorLabel="Start">
-            <motion.a
-              href="#contact"
-              className="btn btn-primary"
+          <MagneticButton cursorLabel="Book">
+            <motion.button
+              className="btn btn-primary btn-book-slot"
               whileTap={{ scale: 0.97 }}
               onMouseEnter={handleCursorEnter}
               onMouseLeave={handleCursorLeave}
-              onClick={(e) => {
-                e.preventDefault();
-                document.querySelector('#contact')?.scrollIntoView({ behavior: 'smooth' });
-              }}
+              onClick={() => setShowBooking(true)}
             >
-              Start Your Project
+              🔥 Book the Slot Now
               <LuArrowRight className="hero-btn-icon" />
-            </motion.a>
+            </motion.button>
           </MagneticButton>
           <MagneticButton cursorLabel="View">
             <motion.a
@@ -259,6 +257,8 @@ export default function Hero({ introComplete }) {
         <span className="hero-scroll-text">Scroll</span>
         <div className="hero-scroll-line" />
       </motion.div>
+
+      <BookingModal isOpen={showBooking} onClose={() => setShowBooking(false)} />
     </section>
   );
 }
