@@ -488,56 +488,91 @@
   }
 
   .booking-offer-hero {
-    padding: 4px 0 10px;
+    padding: 2px 0 6px;
   }
 
   .booking-icon {
-    width: 42px;
-    height: 42px;
-    margin-bottom: 10px;
+    width: 36px;
+    height: 36px;
+    margin-bottom: 6px;
+    border-radius: 10px;
+  }
+
+  .booking-icon svg {
+    width: 18px;
+    height: 18px;
   }
 
   .booking-title {
-    font-size: 1.25rem;
-    margin-bottom: 6px;
-  }
-
-  .booking-token-price {
-    font-size: 1.05rem;
-  }
-
-  .booking-benefits-list {
-    padding: 8px 0;
-  }
-
-  .booking-benefit-item {
-    padding: 7px 10px;
+    font-size: 1.1rem;
     margin-bottom: 4px;
   }
 
+  .booking-original-price {
+    font-size: 0.85rem;
+  }
+
+  .booking-token-price {
+    font-size: 0.95rem;
+  }
+
+  .booking-offer-note {
+    font-size: 0.65rem;
+    margin: 2px 0 0;
+  }
+
+  .booking-benefits-list {
+    padding: 4px 0;
+  }
+
+  .booking-benefits-title {
+    font-size: 0.75rem;
+    margin-bottom: 6px;
+  }
+
+  .booking-benefit-item {
+    padding: 5px 10px;
+    margin-bottom: 3px;
+    border-radius: 8px;
+  }
+
+  .booking-benefit-icon {
+    font-size: 0.85rem;
+  }
+
   .booking-benefit-text {
-    font-size: 0.76rem;
+    font-size: 0.72rem;
+  }
+
+  .booking-benefit-check {
+    font-size: 0.75rem;
   }
 
   .booking-warning {
-    font-size: 0.7rem;
-    padding: 9px 12px;
-    margin: 8px 0 0;
+    font-size: 0.65rem;
+    padding: 7px 10px;
+    margin: 4px 0 0;
+    border-radius: 8px;
+    line-height: 1.4;
+  }
+
+  .booking-warning-icon {
+    font-size: 0.85rem;
   }
 
   .booking-sticky-cta {
-    padding: 12px 16px;
-    padding-bottom: calc(12px + env(safe-area-inset-bottom, 0px));
+    padding: 10px 16px;
+    padding-bottom: calc(10px + env(safe-area-inset-bottom, 0px));
   }
 
   .booking-cta-btn {
-    padding: 14px;
-    font-size: 0.88rem;
+    padding: 12px;
+    font-size: 0.85rem;
   }
 
   .booking-trust {
     gap: 10px;
-    padding: 8px 12px 12px;
+    padding: 6px 12px 10px;
   }
 
   .booking-trust span {
