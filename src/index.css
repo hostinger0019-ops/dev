@@ -260,6 +260,87 @@ input, textarea {
   transform: translateY(-2px);
 }
 
+/* ── Shining Book Slot Button ── */
+.btn-book-slot {
+  background: linear-gradient(135deg, #7C6FFF 0%, #9F7AEA 30%, #00D4A4 70%, #7C6FFF 100%);
+  background-size: 300% 300%;
+  animation: gradientShift 3s ease infinite, pulseGlow 2s ease-in-out infinite;
+  color: #fff !important;
+  font-weight: 700;
+  font-size: 1rem;
+  padding: 16px 32px;
+  border: none;
+  border-radius: 14px;
+  position: relative;
+  overflow: hidden;
+  text-shadow: 0 1px 2px rgba(0, 0, 0, 0.2);
+  box-shadow:
+    0 0 20px rgba(124, 111, 255, 0.4),
+    0 0 40px rgba(124, 111, 255, 0.2),
+    0 4px 15px rgba(0, 0, 0, 0.3);
+}
+
+/* Shimmer light sweep */
+.btn-book-slot::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: -100%;
+  width: 60%;
+  height: 100%;
+  background: linear-gradient(
+    90deg,
+    transparent 0%,
+    rgba(255, 255, 255, 0.08) 25%,
+    rgba(255, 255, 255, 0.3) 50%,
+    rgba(255, 255, 255, 0.08) 75%,
+    transparent 100%
+  );
+  transform: skewX(-20deg);
+  animation: shimmerSweep 2.5s ease-in-out infinite;
+}
+
+.btn-book-slot:hover {
+  transform: translateY(-3px) scale(1.03);
+  box-shadow:
+    0 0 30px rgba(124, 111, 255, 0.6),
+    0 0 60px rgba(124, 111, 255, 0.3),
+    0 0 80px rgba(0, 212, 164, 0.15),
+    0 8px 25px rgba(0, 0, 0, 0.4);
+}
+
+.btn-book-slot:active {
+  transform: translateY(0) scale(0.98);
+}
+
+@keyframes gradientShift {
+  0% { background-position: 0% 50%; }
+  50% { background-position: 100% 50%; }
+  100% { background-position: 0% 50%; }
+}
+
+@keyframes shimmerSweep {
+  0% { left: -100%; }
+  60% { left: 150%; }
+  100% { left: 150%; }
+}
+
+@keyframes pulseGlow {
+  0%, 100% {
+    box-shadow:
+      0 0 20px rgba(124, 111, 255, 0.4),
+      0 0 40px rgba(124, 111, 255, 0.2),
+      0 4px 15px rgba(0, 0, 0, 0.3);
+  }
+  50% {
+    box-shadow:
+      0 0 25px rgba(124, 111, 255, 0.6),
+      0 0 50px rgba(124, 111, 255, 0.35),
+      0 0 70px rgba(0, 212, 164, 0.15),
+      0 4px 15px rgba(0, 0, 0, 0.3);
+  }
+}
+
 .btn-secondary {
   background: transparent;
   color: var(--text-primary);
