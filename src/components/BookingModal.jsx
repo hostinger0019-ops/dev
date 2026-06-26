@@ -243,7 +243,6 @@ export default function BookingModal({ isOpen, onClose }) {
                         value={name}
                         onChange={(e) => setName(e.target.value)}
                         className="booking-input"
-                        autoFocus
                       />
                     </div>
                     <div className="booking-field">
