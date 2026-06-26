@@ -488,7 +488,29 @@
   }
 
   .booking-offer-hero {
-    padding: 2px 0 6px;
+    padding: 0 0 4px;
+  }
+
+  .booking-title {
+    font-size: 1rem;
+    margin-bottom: 2px;
+  }
+
+  .booking-offer-price {
+    flex-direction: row;
+    gap: 8px;
+  }
+
+  .booking-original-price {
+    font-size: 0.8rem;
+  }
+
+  .booking-token-price {
+    font-size: 0.9rem;
+  }
+
+  .booking-offer-note {
+    display: none;
   }
 
   .booking-icon {
@@ -522,30 +544,30 @@
   }
 
   .booking-benefits-list {
-    padding: 4px 0;
+    padding: 2px 0;
   }
 
   .booking-benefits-title {
-    font-size: 0.75rem;
-    margin-bottom: 6px;
+    font-size: 0.72rem;
+    margin-bottom: 4px;
   }
 
   .booking-benefit-item {
-    padding: 5px 10px;
-    margin-bottom: 3px;
+    padding: 4px 10px;
+    margin-bottom: 2px;
     border-radius: 8px;
   }
 
   .booking-benefit-icon {
-    font-size: 0.85rem;
+    font-size: 0.8rem;
   }
 
   .booking-benefit-text {
-    font-size: 0.72rem;
+    font-size: 0.7rem;
   }
 
   .booking-benefit-check {
-    font-size: 0.75rem;
+    font-size: 0.72rem;
   }
 
   .booking-warning {

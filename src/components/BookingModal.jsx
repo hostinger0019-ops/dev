@@ -293,9 +293,6 @@ export default function BookingModal({ isOpen, onClose }) {
                   transition={{ duration: 0.25 }}
                 >
                   <div className="booking-offer-hero">
-                    <div className="booking-icon">
-                      <LuSparkles size={24} />
-                    </div>
                     <h2 className="booking-title">₹25,000 Website</h2>
                     <div className="booking-offer-price">
                       <span className="booking-original-price">₹25,000</span>
