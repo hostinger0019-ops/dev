@@ -179,11 +179,6 @@ export default function Hero({ introComplete }) {
           </span>
         </motion.div>
 
-        <motion.p className="hero-description" variants={fadeUp}>
-          We craft stunning digital products that captivate users, drive growth,
-          and transform ideas into reality. Your vision, our expertise.
-        </motion.p>
-
         <motion.div className="hero-buttons" variants={fadeUp}>
           <MagneticButton cursorLabel="Book">
             <motion.button
@@ -214,6 +209,11 @@ export default function Hero({ introComplete }) {
             </motion.a>
           </MagneticButton>
         </motion.div>
+
+        <motion.p className="hero-description" variants={fadeUp}>
+          We craft stunning digital products that captivate users, drive growth,
+          and transform ideas into reality. Your vision, our expertise.
+        </motion.p>
 
         {/* Hero Mockup */}
         <motion.div className="hero-mockup-wrapper" variants={fadeUp}>
