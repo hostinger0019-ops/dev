@@ -1,6 +1,7 @@
 import { useState, useEffect } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
 import { LuX, LuShield, LuClock, LuSparkles, LuArrowRight, LuPhone, LuUser, LuBriefcase, LuGift, LuZap } from 'react-icons/lu';
+import { trackBookingOpened, trackBookingSubmitted, trackPaymentCompleted, trackWhatsAppClick } from '../utils/gtag';
 import './BookingModal.css';
 
 const WHATSAPP_NUMBER = '918569998653';
@@ -60,6 +61,8 @@ export default function BookingModal({ isOpen, onClose }) {
   useEffect(() => {
     if (!isOpen) return;
     setStep(0);
+    // Track that booking modal was opened
+    trackBookingOpened('booking_modal');
     // Preload Razorpay script
     loadRazorpayScript();
     const interval = setInterval(() => {
@@ -139,6 +142,8 @@ export default function BookingModal({ isOpen, onClose }) {
           const verifyData = await verifyRes.json();
 
           if (verifyData.verified) {
+            // Track successful payment conversion
+            trackPaymentCompleted(TOKEN_AMOUNT, response.razorpay_payment_id);
             // Redirect to success page
             const params = new URLSearchParams({
               payment_id: response.razorpay_payment_id,
@@ -152,7 +157,8 @@ export default function BookingModal({ isOpen, onClose }) {
             setPaying(false);
           }
         } catch {
-          // Even if verify API fails, payment happened — redirect with payment_id
+          // Even if verify API fails, payment happened — track and redirect with payment_id
+          trackPaymentCompleted(TOKEN_AMOUNT, response.razorpay_payment_id);
           const params = new URLSearchParams({
             payment_id: response.razorpay_payment_id,
             name: name,
@@ -180,6 +186,8 @@ export default function BookingModal({ isOpen, onClose }) {
   };
 
   const handleWhatsApp = () => {
+    // Track WhatsApp click conversion
+    trackWhatsAppClick('booking_modal');
     const msg = name
       ? `Hi Tarik, I'm ${name}. I want a ${industry || 'business'} website. Let's discuss!`
       : `Hi Tarik, I saw your ad and I'm interested in getting a website built.`;
@@ -272,7 +280,7 @@ export default function BookingModal({ isOpen, onClose }) {
 
                     <button
                       className="booking-cta-btn"
-                      onClick={() => setStep(1)}
+                      onClick={() => { trackBookingSubmitted(industry); setStep(1); }}
                       disabled={name.trim().length < 2 || phone.trim().length < 10 || !industry}
                     >
                       Next — See Your Offer

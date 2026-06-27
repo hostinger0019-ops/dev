@@ -10,6 +10,7 @@ import MagneticButton from './MagneticButton';
 import heroMockup from '../assets/hero-mockup.png';
 import heroBgImg from '../assets/hero-bg.png';
 import BookingModal from './BookingModal';
+import { trackBookingOpened } from '../utils/gtag';
 import './Hero.css';
 
 const serviceWords = [
@@ -186,7 +187,7 @@ export default function Hero({ introComplete }) {
               whileTap={{ scale: 0.97 }}
               onMouseEnter={handleCursorEnter}
               onMouseLeave={handleCursorLeave}
-              onClick={() => setShowBooking(true)}
+              onClick={() => { trackBookingOpened('hero_button'); setShowBooking(true); }}
             >
               🔥 Book the Slot Now
               <LuArrowRight className="hero-btn-icon" />

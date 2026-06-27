@@ -1,5 +1,7 @@
+import { useEffect } from 'react';
 import { Routes, Route, useLocation } from 'react-router-dom';
 import { CursorProvider } from './context/CursorContext';
+import { trackPageView } from './utils/gtag';
 import CustomCursor from './components/CustomCursor';
 
 import Navbar from './components/Navbar';
@@ -29,6 +31,11 @@ export default function App() {
   const location = useLocation();
   const isHome = location.pathname === '/';
   const isDemoPage = ['/restaurant', '/realestate', '/ecommerce', '/salon', '/dental', '/wedding', '/gym', '/lawfirm', '/education', '/travel', '/photography', '/interiordesign', '/hotel', '/cardealership', '/bakery', '/privacy-policy', '/terms-and-conditions', '/payment-success'].includes(location.pathname);
+
+  // Track page views on SPA route changes
+  useEffect(() => {
+    trackPageView(location.pathname, document.title);
+  }, [location.pathname]);
 
   return (
     <CursorProvider>

@@ -5,6 +5,7 @@ import {
   LuGithub, LuLinkedin, LuTwitter, LuInstagram,
 } from 'react-icons/lu';
 import { useCursor } from '../context/CursorContext';
+import { trackContactFormSubmit, trackPhoneClick } from '../utils/gtag';
 import SplitText from './SplitText';
 import './Contact.css';
 
@@ -36,6 +37,8 @@ export default function Contact() {
   const handleSubmit = async (e) => {
     e.preventDefault();
     setIsSubmitting(true);
+    // Track contact form submission as a conversion
+    trackContactFormSubmit(formData.subject);
     await new Promise((resolve) => setTimeout(resolve, 1500));
     setIsSubmitting(false);
     setIsSubmitted(true);
