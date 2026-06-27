@@ -56,7 +56,7 @@ export default function BookingModal({ isOpen, onClose }) {
   const [step, setStep] = useState(0);
   const [paying, setPaying] = useState(false);
 
-  const [timeLeft, setTimeLeft] = useState({ hours: 2, minutes: 0, seconds: 0 });
+  const [timeLeft, setTimeLeft] = useState({ hours: 0, minutes: 10, seconds: 0 });
 
   useEffect(() => {
     if (!isOpen) return;
