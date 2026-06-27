@@ -218,12 +218,13 @@ export default function BookingModal({ isOpen, onClose }) {
               <LuX size={18} />
             </button>
 
-            {/* Urgency Banner */}
+            {/* Urgency Banner — temporarily hidden
             <div className="booking-urgency">
               <LuClock size={14} />
               <span>Offer expires in <strong>{pad(timeLeft.hours)}:{pad(timeLeft.minutes)}:{pad(timeLeft.seconds)}</strong></span>
               <span className="booking-slots">• Only 3 slots left!</span>
             </div>
+            */}
 
             <AnimatePresence mode="wait">
 
